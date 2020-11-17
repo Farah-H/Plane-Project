@@ -1,7 +1,7 @@
 USE plane_project;
 
 
-CREATE TABLE countries (
+CREATE TABLE country_details (
     country_code VARCHAR(3) PRIMARY KEY,
     country_name VARCHAR(100) UNIQUE,
     additional_restrictions VARCHAR(15),
@@ -14,10 +14,12 @@ CREATE TABLE passport_details (
     [expiry_date] DATE NOT NULL,
     expired BIT NOT NULL,
     country_code VARCHAR(3) REFERENCES countries(country_code),
-    CONSTRAINT passport_details CHECK(
-        [expiry_date] < GETDATE() OR expired = 1 
-    )
+    -- CONSTRAINT passport_details CHECK(
+    --     [expiry_date] < GETDATE() OR expired = 1 
+    -- )
 );
+
+USE plane_project;
 
 CREATE TABLE passenger_details (
     passenger_id INT IDENTITY PRIMARY KEY,
@@ -33,7 +35,7 @@ CREATE TABLE passenger_details (
 
 CREATE TABLE airports(
     airport_code VARCHAR(4) PRIMARY KEY,
-    country_code VARCHAR(3) NOT NULL REFERENCES countries(country_code),
+    country_code VARCHAR(3) NOT NULL REFERENCES country_details(country_code),
     longitude DECIMAL(9,6) NOT NULL,
     latitude DECIMAL(8,6) NOT NULL, 
 
@@ -86,7 +88,12 @@ CREATE TABLE journey_details (
 );
 
 CREATE TABLE booking_details (
-    booking_id INT IDENTITY PRIMARY
+    booking_id INT IDENTITY PRIMARY KEY,
+    booking_date DATETIME NOT NULL,
+    staff_id INT NOT NULL REFERENCES staff(staff_id),
+    airline VARCHAR(25) NOT NULL,
+    total MONEY NOT NULL
+
 );
 
 CREATE TABLE ticket_details (
@@ -95,5 +102,5 @@ CREATE TABLE ticket_details (
     seat_number VARCHAR(4),
     terminal_id INT REFERENCES terminals(terminal_id),
     passenger_id INT REFERENCES passenger_details(passenger_id),
-    booking_id INT REFERENCES booking
+    booking_id INT REFERENCES booking_details(booking_id)
 )
