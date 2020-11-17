@@ -1,5 +1,6 @@
 class ClientInformation:
     def __init__(self, fname, lname, address, dob):
+        self.__title = title
         self.__first_name = fname
         self.__last_name = lname
         self.__address = address
@@ -20,3 +21,9 @@ class ClientInformation:
     @property
     def date_of_birth(self):
         return self.__date_of_birth
+    
+    @property
+    def fullname(self):
+        return f"{self.__title} {self.__first_name} {self.__last_name}"
+        
+
