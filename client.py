@@ -2,12 +2,17 @@ from authentication import Authentication
 
 
 class ClientInformation(Authentication):
-    def __init__(self, fname, lname, address, dob):
+    def __init__(self, title, fname, lname, address, dob):
         super().__init__()
+        self.__title = title
         self.__first_name = fname
         self.__last_name = lname
         self.__address = address
         self.__date_of_birth = dob
+
+    @property
+    def title(self):
+        return self.__title
 
     @property
     def first_name(self):
