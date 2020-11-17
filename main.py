@@ -20,3 +20,4 @@ class ClientInformation:
     @property
     def date_of_birth(self):
         return self.__date_of_birth
+

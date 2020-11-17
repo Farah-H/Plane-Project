@@ -8,7 +8,7 @@ Each heading will have a list of tests that need to be created to check the func
 - If we use a getter for any of the class attributes, it should return the attribute for that instance
 - ?If we use a setter for any of the class attributes, it should change that attribute for that instance
 - Should be a fullname() method that returns the users full name including their title
-## Connection class tests
+## Authentication class tests
 - If we instantiate the class does it successfully create a connection with the database
 ## BackupData class
 - When the backup_handler() class is called can you successfully retrieve the data stored in the database
