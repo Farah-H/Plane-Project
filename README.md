@@ -56,4 +56,5 @@ Child
 
 - `main.py` = main front-end interface for user input
 - `db_*.py` = backend class files containing database related - functionality
+- `user_*.py` = Containers for each level of permissions and their actions
 - `test_*.py` = test cases for the project

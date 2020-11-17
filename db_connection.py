@@ -2,6 +2,7 @@ import pyodbc
 import json
 
 
+# Parent class that establishes connection with the Database
 class Connection:
     def __init__(self, db_login, db_password):
         self.__server = "82.34.117.17"

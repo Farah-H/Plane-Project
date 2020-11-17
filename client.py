@@ -1,3 +1,8 @@
+###### PLACEHOLDER ######
+# Client Data Structure #
+#########################
+
+
 class ClientInformation:
     def __init__(self, title, fname, lname, address, dob):
         self.__title = title

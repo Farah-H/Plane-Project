@@ -10,5 +10,6 @@ from authentication import Authentication
 #
 # CANNOT view sensitive information about the passanger
 
+
 class Staff(Authentication):
     pass

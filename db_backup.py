@@ -1,6 +1,10 @@
 import json
 from db_connection import Connection
 
+#### PLACEHOLDER ####
+# DOES NOT WORK YET #
+#####################
+
 
 class BackupData(Connection):
     def __init__(self, db_login, db_password, table_name, backup_file):
