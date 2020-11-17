@@ -25,7 +25,7 @@ class Authentication(Connection):
             elif permission == "user":
                 return self.__login
             else:
-                return "guest"
+                raise Exception("Error: Permission level doesn't exist.")
         else:
             raise Exception("Error: Login credentials do not match the db.")
 
