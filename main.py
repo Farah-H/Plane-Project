@@ -1,4 +1,4 @@
-class Initial:
+class ClientInformation:
     def __init__(self, fname, lname, address, dob):
         self.__first_name = fname
         self.__last_name = lname
