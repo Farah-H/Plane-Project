@@ -54,6 +54,6 @@ Child
 
 ## Naming conventions
 
-`main.py` = main front-end interface for user input
-`db_*.py` = backend class files containing database related functionality
-`test_*.py` = test cases for the project
+- `main.py` = main front-end interface for user input
+- `db_*.py` = backend class files containing database related - functionality
+- `test_*.py` = test cases for the project
