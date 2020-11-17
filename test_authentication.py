@@ -30,11 +30,9 @@ class TestAuthentication(unittest.TestCase):
         self.assertTupleEqual(checking_user_tuple, self.test_authen.db_credentials("user"))
 
     def test_password(self):
-        pass
-
-    def test_hashpass(self):
-        pass
-
-    def test_checkhash(self):
-        pass
-
+        # Checking the result when a username can not be found in the database
+        self.assertFalse(self.test_authen.password("barrybluejeans", "barryspassword"))
+        # Checking the result of changing a password for a username that can be found in the database
+        self.assertTrue(self.test_authen.password("jake", "newjake"))
+        # Checking if you can log in with the new password
+        self.assertNotEqual(self.test_authen.check_login("jake", "newjake"), False)
