@@ -11,7 +11,7 @@ class TestAuthentication(unittest.TestCase):
         # Checking the result when a  user is found in the database
         self.assertNotEqual(self.test_user_authen.credential_manager("jake"), False)
         # Checking the result when a user is not found
-        self.assertFalse(self.test_user_authen.credential_manager("barry"))
+        self.assertFalse(self.test_user_authen.credential_manager("barrybluejeans"))
 
     def test_check_login(self):
         self.assertTrue(self.test_admin_authen.check_login("jake", "jake"))
@@ -19,3 +19,13 @@ class TestAuthentication(unittest.TestCase):
 
     def test_db_credentials(self):
         pass
+
+    def test_password(self):
+        pass
+
+    def test_hashpass(self):
+        pass
+
+    def test_checkhash(self):
+        pass
+
