@@ -1,3 +1,4 @@
+# IGNORE THIS FILE
 # from main import ClientInformation  # Importing the class to be tested
 # import unittest
 # import pytest
