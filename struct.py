@@ -9,18 +9,18 @@
 # - Visa
 # - Ticket Number
 
-#######################
+###############################
 
 ### Front Desk - Buy Tickets
 # - SQL
 # - Check info exists
 
 ### Back end logic
+# - Admin Access
+# - Managers Settings
 # - Do we need more sales
-# - Managers Set
 # - Delete a ticket
 # - Change information
-# - Admin Access
 
 ### At the airport
 # - Check if passport valid

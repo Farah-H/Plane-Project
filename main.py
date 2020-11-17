@@ -1,5 +1,9 @@
-class ClientInformation:
+from admin import StaffMember
+
+
+class ClientInformation(StaffMember):
     def __init__(self, fname, lname, address, dob):
+        super().__init__()
         self.__first_name = fname
         self.__last_name = lname
         self.__address = address
