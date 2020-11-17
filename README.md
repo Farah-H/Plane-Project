@@ -21,7 +21,11 @@ Each heading will have a list of tests that need to be created to check the func
 ## AirportAssistant class
 - Can the create_passenger() function retrieve and use a Passenger's name and Passport details
     - Can they then add that Passenger to a Flight?
--  
+- Can the flight_trip() function create a trip with a plane, departure location, destination, and date?
+    - Does it allow an AirportAssistant to create a trip that overlaps with another trip by the same plane e.g
+    . setting a flight trip from France to Germany on the 5th of December when that same plane is already making a
+     trip from Senegal to Brazil from the 4th to the 6th?
+- Can they UPDATE the flight_trip information using the inherited ClientInformation connection method?
 ## Flight class tests
 
 ## Seat class tests
