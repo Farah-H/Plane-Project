@@ -1,9 +1,5 @@
-from authentication import Authentication
-
-
-class ClientInformation(Authentication):
+class ClientInformation:
     def __init__(self, title, fname, lname, address, dob):
-        super().__init__()
         self.__title = title
         self.__first_name = fname
         self.__last_name = lname
@@ -29,3 +25,7 @@ class ClientInformation(Authentication):
     @property
     def date_of_birth(self):
         return self.__date_of_birth
+
+    @property
+    def full_name(self):
+        return f"{self.__title} {self.__first_name} {self.__last_name}"

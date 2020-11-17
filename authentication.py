@@ -5,27 +5,23 @@ from db_connection import Connection
 
 
 class Authentication(Connection):
-    def __init__(self, login, password, required_permissions):
+    def __init__(self, login, password):
         self.__login = login
         self.__password = password
-        self.__required_permissions = required_permissions
-        self.__can_login = check_login(
-            self.__login, self.__password, self.__required_permissions
-        )
-        self.__db_login = db_credentials(self.__can_login, self.__required_permissions)
-        self.__db_password = db_credentials(
-            self.__can_login, self.__required_permissions
-        )
+        self.__can_login = self.check_login(self.__login, self.__password)
+        self.__credential_list = self.db_credentials(self.__can_login)
+        self.__db_login = self.__credential_list[0]
+        self.__db_password = self.__credential_list[0]
+        self.__permission_level = self.__credential_list[1]
         super().__init__(self.__db_login, self.__db_password)
 
-    def db_credentials(self, can_login, permission):
-        if can_login:
-            if permission == "admin":
-                return "dev"
-            elif permission == "user":
-                return self.__login
-            else:
-                raise Exception("Error: Permission level doesn't exist.")
+    @property
+    def permission_level(self):
+        return self.__permission_level
+
+    def db_credentials(self, can_login):
+        if can_login != False:
+            return self.__login, can_login
         else:
             raise Exception("Error: Login credentials do not match the db.")
 
@@ -39,13 +35,12 @@ class Authentication(Connection):
                 row = self.cursor.fetchone()
         return False
 
-    def check_login(self, login, password, permissions):
+    def check_login(self, login, password):
         data = self.credential_manager(login)
 
         if isinstance(data, list):
             if checkhash(data[2], password):
-                if data[3] == permissions:
-                    return True
+                return data[3]
         return False
 
     def password(self, username, new_password):
