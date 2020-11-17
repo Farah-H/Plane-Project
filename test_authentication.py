@@ -15,6 +15,7 @@ class TestAuthentication(unittest.TestCase):
 
     def test_check_login(self):
         self.assertTrue(self.test_admin_authen.check_login("jake", "jake"))
+        self.assertFalse(self.test_admin_authen.check_login("jake", "notjake"))
 
     def test_db_credentials(self):
         pass
