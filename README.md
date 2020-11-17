@@ -16,23 +16,25 @@ Child
   - Ticket Number
   - etc
 
-## Front Desk - Buy Tickets
+## Modules Breakdown
 
-### Anonymous Querying
+### Front Desk - Buy Tickets
+
+#### Anonymous Querying
 
 - Guest SQL Requests
 - Select available flights
 - Display available seats
 - Pricings, Dates etc
 
-### Staff Querying
+#### Staff Querying
 
 - Sell tickets
 - Client data collection
 - Automated system for checking if information is real
 - Automated system for price altering for children / special cases
 
-## Back end logic
+### Back end logic
 
 - Admin Access
 - Staff permission levels
@@ -43,9 +45,15 @@ Child
 - Login system (using SQL and Hashing)
 - Local back up system into JSON
 
-## Post Purchase / Entering airport or plane
+### Post Purchase / Entering airport or plane
 
 - Check if ticket is valid
 - Check if passport valid
 - Check if visa needed
 - Security Desk
+
+## Naming conventions
+
+`main.py` = main front-end interface for user input
+`db_*.py` = backend class files containing database related functionality
+`test_*.py` = test cases for the project
