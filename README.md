@@ -7,7 +7,13 @@ Each heading will have a list of tests that need to be created to check the func
 ## ClientInformation class tests
 - If we use a getter for any of the class attributes, it should return the attribute for that instance
 - ?If we use a setter for any of the class attributes, it should change that attribute for that instance
-- If we call the ```connection method``` does it successfully create a connection with the database
+- Should be a fullname() method that returns the users full name including their title
+## Connection class tests
+- If we instantiate the class does it successfully create a connection with the database
+## BackupData class
+- When the backup_handler() class is called can you successfully retrieve the data stored in the database
+    - If not, does the method handle this gracefully (i.e. no errors)
+    - If something happens to the database can we recreate the data with a constructor() method?
 ## Passenger class tests
 - When initialised, are the passengers information for their Passport, Visa, and Ticket Number assigned correctly?
 - If we call the ```set_personal_info()``` method, are the attributes set accordingly
@@ -18,6 +24,11 @@ Each heading will have a list of tests that need to be created to check the func
      i.e. "DD/MM/YYYY" vs "MM/DD/YYYY" in different countries, and if not does it make it clear which order the user
       should use when inputting this?
 - !Is it clear what the user is inputting for each attribute and what form it should take?
+## StaffMember class
+- Can the StaffMember log in to be able to perform tasks that only Staff can perform?
+- Can a StaffMember change their details e.g. regularly changing their passwords to ensure the system is secure?
+    - If a StaffMember tries to change their password and inputs their existing password they should be told that
+     their new password must be different from their last password
 ## AirportAssistant class
 - Can the create_passenger() function retrieve and use a Passenger's name and Passport details
     - Can they then add that Passenger to a Flight?
@@ -26,6 +37,9 @@ Each heading will have a list of tests that need to be created to check the func
     . setting a flight trip from France to Germany on the 5th of December when that same plane is already making a
      trip from Senegal to Brazil from the 4th to the 6th?
 - Can they UPDATE the flight_trip information using the inherited ClientInformation connection method?
+- If a StaffMember or a Passenger without the right permissions attempts to execute any of the above functionality
+, does this work?
+
 ## Flight class tests
 
 ## Seat class tests
