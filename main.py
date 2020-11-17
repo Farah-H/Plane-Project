@@ -1,7 +1,7 @@
-from admin import StaffMember
+from authentication import Authentication
 
 
-class ClientInformation(StaffMember):
+class ClientInformation(Authentication):
     def __init__(self, fname, lname, address, dob):
         super().__init__()
         self.__first_name = fname
