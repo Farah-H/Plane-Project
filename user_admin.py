@@ -48,6 +48,9 @@ class Admin(Authentication):
         # True / False
         pass
 
+    def remove_flight(self, flight_ref):
+        pass
+
 
 def main():
     test = Admin("dev", "dev")
