@@ -9,7 +9,7 @@ class Guest(Connection):
 
     def all_flights(self):
         data = []
-        query = "SELECT * FROM journey_details"
+        query = "SELECT planes.plane_type, journey_details.departure_time, journey_details.arrival_time, journey_details.departing_from, journey_details.arriving_to, planes.plane_capacity, planes.seats_available FROM journey_details INNER JOIN planes on journey_details.plane_id = planes.plane_id"
         count = 0
         with self.cursor.execute(query):
             row = self.cursor.fetchone()
@@ -22,7 +22,7 @@ class Guest(Connection):
     # takes flight reference
     def display_flight(self, flight_ref):
         data = None
-        query = f"SELECT * FROM journey_details WHERE journey_id = '{flight_ref}'"
+        query = f"SELECT planes.plane_type, journey_details.departure_time, journey_details.arrival_time, journey_details.departing_from, journey_details.arriving_to, planes.plane_capacity, planes.seats_available FROM journey_details INNER JOIN planes on journey_details.plane_id = planes.plane_id  WHERE journey_id = '{flight_ref}'"
         with self.cursor.execute(query):
             row = self.cursor.fetchall()
             data = row
