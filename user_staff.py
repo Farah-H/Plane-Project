@@ -35,11 +35,18 @@ class Staff(Authentication):
         # If changed or failed to change
         pass
 
-    # PLACEHOLDER
     # Takes Flight Referenece (string)
     def display_flight(self, flight_ref):
-        data = self.get_data("name pending")
-        return data
+        data = None
+        query = f"SELECT planes.plane_type, journey_details.departure_time, journey_details.arrival_time, journey_details.departing_from, journey_details.arriving_to, planes.plane_capacity, planes.seats_available FROM journey_details INNER JOIN planes on journey_details.plane_id = planes.plane_id  WHERE journey_id = '{flight_ref}'"
+        with self.cursor.execute(query):
+            row = self.cursor.fetchall()
+            data = row
+
+        # Example output:
+        # [ plane type, departure time, arrival time, departing from, arriving to, plane capacity, seats available]
+        # ["helicopter", "2020-11-11 13:23:44.000", "2020-11-11 15:23:44.000", "LHR", "LHR", 10, 1]
+        return data if data != None else False
 
     # PLACEHOLDER
     # Takes full name 2x string
@@ -54,9 +61,4 @@ class Staff(Authentication):
         return output
 
     def security_check(self, flight_ref):
-        pass
-
-    # Takes string
-    def check_seats(self, flight_ref):
-        # Returns integer
         pass
