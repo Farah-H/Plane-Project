@@ -13,6 +13,7 @@ class BackupData(Connection):
         self.backup_file = backup_file
 
     def backup_handler(self):
+        old_data = None
         try:
             sql_data = self.pull_table(self.table_name)
         except:

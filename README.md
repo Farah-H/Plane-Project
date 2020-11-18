@@ -66,9 +66,8 @@ Each heading will have a list of tests that need to be created to check the func
     understand and use.
 ## ClientInformation class tests
 - If we use a getter for any of the class attributes, it should return the attribute for that instance
-- ?If we use a setter for any of the class attributes, it should change that attribute for that instance
-- Should be a fullname() method that returns the users full name including their title
-## Authentication class tests
+- Should be a fullname() method that returns the users full name including their title to easily output this to the user
+## Connection class tests
 - If we instantiate the class does it successfully create a connection with the database
 ## BackupData class
 - When the backup_handler() class is called can you successfully retrieve the data stored in the database
@@ -100,8 +99,23 @@ Each heading will have a list of tests that need to be created to check the func
 - If a StaffMember or a Passenger without the right permissions attempts to execute any of the above functionality
 , does this work?
 
-## Flight class tests
-
+## Front end UI tests
+- Are the attributes in the ```__init__``` method validated e.g. a negative flight duration or an arrival time before
+ the departure time
+- Are the departure and arrival times going to be strings or datetime objects?
+- Is the body method meant to be inside the Flight class?
+- Good handling of invalid options with except: continue block
+- Are the ifs and elifs in the loops?
+- Possible infinite loop when making choices?
+    - Except statement only runs when a user inputs a non numeric, doesn't cover if the user inputs numbers that aren't 
+      1, 2, or 3
+- Check email address for the inclusion of the '@' character to validate it
+- Check for non yes or no responses to the minor question
+- When receiving the minor's date of birth we should check to see if they're young enough to be considered a minor
+, otherwise we could lose money (we should also specify the cutoff age before asking if they are travelling with any
+ minors)
+- No message on what the user should input for ```departure_date```
+- Good check on the validity of the departure and landing destinations
 ## Seat class tests
 - Does the ```__init__``` method correctly assign the passed arguments to the instance?
     - ?If the seat number already exists, is there a check here for that or is that handled elsewhere?

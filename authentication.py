@@ -18,6 +18,10 @@ class Authentication(Connection):
         self.__permission_level = self.__credential_list[1]
         super().__init__(self.__db_login, self.__db_password)
 
+    @property
+    def db_login(self):
+        return self.__db_login
+
     # Property for getting the Staff member's permission level
     @property
     def permission_level(self):
