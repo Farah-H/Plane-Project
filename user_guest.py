@@ -11,6 +11,15 @@ class Guest(Connection):
         # Those credentials only have "read" access in the db
         super().__init__("guest", "guest")
 
+    def all_flights(self):
+        # Returns list
+        pass
+
+    # takes flight reference
+    def display_flight(self, flight_ref):
+        # List
+        pass
+
     def get_table(self, table_name):
         data = []
         query = f"SELECT * FROM {table_name}"

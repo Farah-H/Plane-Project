@@ -12,4 +12,34 @@ from authentication import Authentication
 
 
 class Staff(Authentication):
-    pass
+    # Loads table data
+    def get_data(self, table_name):
+        # Returns list
+        pass
+
+    # No idea what information goes in ask Jake
+    def add_passanger(self, *args):
+        # Will return flight confirmation details
+        # Probably list
+        pass
+
+    # Takes Flight Referenece (string)
+    def display_flight(self, flight_ref):
+        # Returns list of information
+        pass
+
+    # Takes full name 2x string
+    def display_passanger(self, fname, lname):
+        # Returns list of information
+        pass
+
+    # Takes string
+    def check_seats(self, flight_ref):
+        # Returns integer
+        pass
+
+    # Takes user full name + info to change + that new info
+    def change_passanger(self, *args):
+        # Returns True or False
+        # If changed or failed to change
+        pass

@@ -95,3 +95,22 @@ class Authentication(Connection):
         pass_hash = binascii.hexlify(pwd_hash).decode("ascii")
         # Returns a Boolean
         return pass_hash == stored_pwd
+
+
+def main():
+
+    data = {}
+    username = ["dev", "farah", "jamie", "jake", "guest"]
+    for user in username:
+        password = str(user)
+        salt = hashlib.sha256(os.urandom(60)).hexdigest().encode("ascii")
+        pwd_hash = hashlib.pbkdf2_hmac("sha512", password.encode("utf-8"), salt, 100000)
+        pass_hash = binascii.hexlify(pwd_hash)
+        data[user] = (salt + pass_hash).decode("ascii")
+
+    for k, v in data.items():
+        print(f"{k} : {v}")
+
+
+if __name__ == "__main__":
+    main()
