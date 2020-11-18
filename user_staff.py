@@ -24,13 +24,13 @@ class Staff(Authentication):
         return data if len(data) > 0 else False
 
     # No idea what information goes in ask Jake
-    def add_passanger(self, *args):
+    def add_passenger(self, *args):
         # Will return flight confirmation details
         # Probably list
         pass
 
     # Takes user full name + info to change + that new info
-    def change_passanger(self, *args):
+    def change_passenger(self, *args):
         # Returns True or False
         # If changed or failed to change
         pass
@@ -43,7 +43,7 @@ class Staff(Authentication):
 
     # PLACEHOLDER
     # Takes full name 2x string
-    def display_passanger(self, fname, lname):
+    def display_passenger(self, fname, lname):
         output = None
         data = self.get_data("passanger?")
         if data != False:
