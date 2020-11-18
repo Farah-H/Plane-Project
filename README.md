@@ -39,7 +39,7 @@ Each heading will have a list of tests that need to be created to check the func
 - If a StaffMember or a Passenger without the right permissions attempts to execute any of the above functionality
 , does this work?
 
-## Flight class tests
+## Front end UI tests
 - Are the attributes in the ```__init__``` method validated e.g. a negative flight duration or an arrival time before
  the departure time
 - Are the departure and arrival times going to be strings or datetime objects?
