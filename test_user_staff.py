@@ -19,7 +19,10 @@ class TestStaff(unittest.TestCase):
         self.assertTrue(self.test_staff.change_passenger("Barry Blue Jeans", "journey_id", 9))
 
     def test_display_flight(self):
-        pass
+        # Format of list is [terminal_id, departure_time, arrival_time, airport_code(dep_from), airport_code(arrive_at)]
+        expected_list = [1, "2020-08-02 13:00:00", "2020-08-02 18:00:00", "LHR", "GDG"]
+        # Checking if the correct data is retrieved from the database when the method is called
+        self.assertListEqual(self.test_staff.display_flight(8), expected_list)
 
     def test_get_data(self):
         # Checking if data can be successfully queried from the database
