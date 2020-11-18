@@ -1,9 +1,5 @@
 from db_connection import Connection
 
-##### PLACEHOLDER #####
-# Guest Functionality #
-#######################
-
 
 class Guest(Connection):
     def __init__(self):
