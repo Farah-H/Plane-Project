@@ -7,13 +7,24 @@ class TestAdmin(unittest.TestCase):
     test_admin = Admin()
 
     def test_add_staff(self):
-        pass
+        # Checking the result when trying to add someone new
+        self.assertTrue(self.test_admin.add_staff("new_staff", "secretpassword"))
+        # Checking the result when trying to add someone that already exists
+        self.assertFalse(self.test_admin.add_staff("jake", "s3cur3pa55w0rd"))
 
     def test_remove_staff(self):
-        pass
+        # Checking the result when trying to delete a staff that doesn't exist
+        self.assertTrue(self.test_admin.remove_staff("barrybluejeans"))
+        # Checking the result when trying to remove someone that does exist
+        self.assertFalse(self.test_admin.remove_staff("new_staff"))
 
     def test_change_permissions(self):
-        pass
+        # Checking the result when trying to change an existing users permissions
+        self.assertTrue(self.test_admin.change_permissions("jake", "user"))
+        # Checking the result when trying to change a non existent users permissions
+        self.assertFalse(self.test_admin.change_permissions("new_staff", "admin"))
+        # Checking result when trying to change existing users permissions to the same permissions they already have
+        self.assertFalse(self.test_admin.change_permissions("jake", "user"))
 
     def test_view_user(self):
         # Checking that the method returns the expected information for a user in the database
@@ -36,4 +47,15 @@ class TestAdmin(unittest.TestCase):
         self.assertFalse(self.test_admin.edit_flight("NO 00", bad_keys_dict))
 
     def test_add_flight(self):
-        pass
+        # Checking if a flight with valid data can be added
+        valid_flight = {"flight_reference": "SA 74", "flight_destination": "Paris",
+                        "departure_location": "JFK", "flight_duration": 420, "departure_time": "10am",
+                        "arrival_time": "5pm", "total_seats": 250
+                        }
+        self.assertTrue(self.test_admin.add_flight(valid_flight))
+        # Checking if a flight with invalid data can be added
+        invalid_flight = {"flight_reference": "APOLLO 11", "flight_destination": "Moon",
+                          "departure_location": "Earth", "flight_duration": 9000, "departure_time": "10am",
+                          "arrival_time": "5pm", "total_seats": 2
+                          }
+        self.assertFalse(self.test_admin.add_flight(invalid_flight))
