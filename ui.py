@@ -98,6 +98,7 @@ def body():
             else:
                 print("Please enter a valid destination location.")
 
+    # a booking and all its details can be changed
     elif choice_0_1 == 2:
         while True:
             print("""\nPick an option:
@@ -152,8 +153,8 @@ def body():
 
         # exit the interface
         elif choice_0_1_2_1 == 3:
-            while True:
                 print("""\nEXIT""")
+                break
 
  
         elif choice_0_1_2 == 2:
@@ -174,25 +175,16 @@ def body():
                 else:
                     print("Please enter a valid destination location.")
     
+    # exit option was selected on the second menu
     elif choice_0_1 == 3:
         print("Thank you for your time, have a pleasant journey.")
+        break
  
- 
-
-
-
-    elif choice_1_2_1 == 1:
+    if choice_0 == 2:
         while True:
-        print("""\nPick an option:
-                    1. Make a flight route
-                    2. View flight routes
-                    3. EXIT"""
-
-
-    elif choice_0 == 2:
-        while True:
-        print("""\nPick an option:
-                    1. Make a flight route
-                    2. View flight routes
-                    3. EXIT"""
-        
+            print("Welcome to the flight manager.")
+            print("""\nPick an option:
+                    1. Create a flight route
+                    2. Change the details of an existing flight route
+                    3. Cancel a route
+                    4. EXIT""")
