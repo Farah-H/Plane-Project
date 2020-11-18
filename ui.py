@@ -49,6 +49,7 @@ def body():
                         
                         elif choice_view == 4:
                             break
+                        
                         else:
                             if choice_view not in range(1, 5):
                                 print("Pick 1, 2, 3 or 4")
@@ -68,12 +69,9 @@ def body():
                     # if the user inputs an invalid option the code runs again
                     try:
                         choice_0 = int(input("--->  ")) 
-                        if choice_0 not in range(1, 4):
-                            print("Pick 1, 2 or 3")
                     except:
                         continue
                     else:
-            
                         if choice_0 == 1:
                             while True:
                                     print("Welcome to the booking manager.")
@@ -148,54 +146,45 @@ def body():
                             # if the user inputs an invalid option the code runs again
                             try:
                                 choice_0_1_2 = int(input("--->  "))
-                            try: 
-                                if choice_0_1_2 in range(1, 4):
-                                    continue
                             except:
-                            continue
-                            except:
-                            continue
+                                continue
                             
                             # change passenger information, find out which information to change
                             if choice_0_1_2 == 1:
-                            while True:
-                                print("""\nPick an option:
-                                        1. Change passport number
-                                        2. Change other passenger information
-                                        3. EXIT""")
-                            # if the user inputs an invalid option the code runs again
-                            try:
-                                choice_0_1_2_1= int(input("--->  "))
-                                try: 
-                                    if choice_0_1_2_1 in range(1, 4):
-                                        continue
+                                while True:
+                                    print("""\nPick an option:
+                                            1. Change passport number
+                                            2. Change other passenger information
+                                            3. EXIT""")
+                                # if the user inputs an invalid option the code runs again
+                                try:
+                                    choice_0_1_2_1= int(input("--->  "))
                                 except:
                                     continue
-                            except:
-                                continue
-                            # either the full name or the passport number remains the same
-                            # we use sql to extract all the data on the passenger and UPDATE the relevant column
-                            if choice_0_1_2_1 == 1:
-                            while True:
-                                print("\nIn order to change passenger passport number please answer the following questions: ")
-                                fname = input("Enter passenger first name:\n ").title()
-                                lname = input("Enter passenger last name:\n ").title()
-                                dob = input("Enter passenger date of birth as DD/MM/YYYY:\n ")
-                                # we use sql to extract all the data on the passenger and UPDATE the relevant column
-                    
-                            # change passemger personal information
-                            elif choice_0_1_2_1 == 2:
-                            while True:
-                                print("\nIn order to change passenger personal information please answer the following question: ")
-                                p_number = input("Enter passenger passport number:\n ")
-                                # we use sql to extract all the data on the passenger and UPDATE the relevant column
-                    
-                            # exit the interface
-                            elif choice_0_1_2_1 == 3:
-                            print("""\nEXIT""")
-                            break
-                    
-                     
+                                else: 
+                                    # either the full name or the passport number remains the same
+                                    # we use sql to extract all the data on the passenger and UPDATE the relevant column
+                                    if choice_0_1_2_1 == 1:
+                                        while True:
+                                            print("\nIn order to change passenger passport number please answer the following questions: ")
+                                            fname = input("Enter passenger first name:\n ").title()
+                                            lname = input("Enter passenger last name:\n ").title()
+                                            dob = input("Enter passenger date of birth as DD/MM/YYYY:\n ")
+                                            # we use sql to extract all the data on the passenger and UPDATE the relevant column
+                                
+                                    # change passemger personal information
+                                    elif choice_0_1_2_1 == 2:
+                                        while True:
+                                            print("\nIn order to change passenger personal information please answer the following question: ")
+                                            p_number = input("Enter passenger passport number:\n ")
+                                            # we use sql to extract all the data on the passenger and UPDATE the relevant column
+                            
+                                    # exit the interface
+                                    elif choice_0_1_2_1 == 3:
+                                        print("""\nEXIT""")
+                                        break
+                        
+                         
                             elif choice_0_1_2 == 2:
                                 while True:
                                     departure_date = input("What day do you wish to depart?\n Format is DD/MM/YYYY: ")
@@ -216,20 +205,17 @@ def body():
                             
                             # exit option was selected on the second menu
                             elif choice_0_1 == 3:
-                            print("Thank you for your time, have a pleasant journey.")
-                            break
+                                print("Thank you for your time, have a pleasant journey.")
+                                break
                          
                             if choice_0 == 2:
-                            while True:
-                                print("Welcome to the flight manager.")
-                                print("""\nPick an option:
-                                        1. Create a flight route
-                                        2. Change the details of an existing flight route
-                                        3. Cancel a route
-                                        4. EXIT""")
-            
-            
-            
-                        else:
-                            if choice_initial not in range(1, 3):
-                            print("Pick 1 or 2")            
+                                while True:
+                                    print("Welcome to the flight manager.")
+                                    print("""\nPick an option:
+                                            1. Create a flight route
+                                            2. Change the details of an existing flight route
+                                            3. Cancel a route
+                                            4. EXIT""")
+                                
+                        if choice_0 not in range(1, 4):                      
+                            print("Pick 1, 2 or 3")
