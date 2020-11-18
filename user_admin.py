@@ -10,7 +10,7 @@ from db_backup import BackupData
 # Can add / remove / edit all flight information
 
 
-class Admin(Authentication):
+class Admin(Staff):
     def backup_table(self, table_name, file_name):
         back_up = BackupData(self.db_login, self.db_login, table_name, file_name)
         data = back_up.backup_handler()
