@@ -1,7 +1,7 @@
 USE plane_project;
 
 
-CREATE TABLE country_details (
+CREATE TABLE country (
     country_code VARCHAR(3) PRIMARY KEY,
     country_name VARCHAR(100) UNIQUE,
     additional_restrictions VARCHAR(15),
@@ -13,10 +13,7 @@ CREATE TABLE passport_details (
     issue_date DATE NOT NULL,
     [expiry_date] DATE NOT NULL,
     expired BIT NOT NULL,
-    country_code VARCHAR(3) REFERENCES countries(country_code),
-    -- CONSTRAINT passport_details CHECK(
-    --     [expiry_date] < GETDATE() OR expired = 1 
-    -- )
+    country_code VARCHAR(3) REFERENCES country(country_code)
 );
 
 USE plane_project;
@@ -27,15 +24,13 @@ CREATE TABLE passenger_details (
     first_name VARCHAR(15) NOT NULL,
     last_name VARCHAR(15) NOT NULL,
     dob DATE NOT NULL,
-    dependent_on INT REFERENCES passenger_details(passenger_id),
-    CONSTRAINT passenger_details CHECK
-    (DATEDIFF(year, GETDATE(), dob) <= 12 OR dependent_on IS NOT NULL)
+    dependent_on INT REFERENCES passenger_details(passenger_id)
 );
 
 
-CREATE TABLE airports(
+CREATE TABLE airports (
     airport_code VARCHAR(4) PRIMARY KEY,
-    country_code VARCHAR(3) NOT NULL REFERENCES country_details(country_code),
+    country_code VARCHAR(3) NOT NULL REFERENCES country(country_code),
     longitude DECIMAL(9,6) NOT NULL,
     latitude DECIMAL(8,6) NOT NULL, 
 
@@ -53,7 +48,7 @@ CREATE TABLE credentials (
     [user_id] INT IDENTITY PRIMARY KEY,
     username VARCHAR(255) UNIQUE NOT NULL,
     [password] VARCHAR(255) NOT NULL,
-    staff_id INT NOT NULL REFERENCES staff(staff_id),
+    staff_id INT REFERENCES staff(staff_id),
     [permissions] VARCHAR(5) NOT NULL
 );
 
