@@ -53,6 +53,9 @@ class Staff(Authentication):
 
         return output
 
+    def security_check(self, flight_ref):
+        pass
+
     # Takes string
     def check_seats(self, flight_ref):
         # Returns integer
