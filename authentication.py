@@ -34,25 +34,27 @@ class Authentication(Connection):
 
     # Function for pulling all credentials and returing only the selected username's information
     def credential_manager(self, username):
+        guest = Connection("guest", "guest")
         query = f"SELECT * FROM credentials"
-        with self.cursor.execute(query):
-            row = self.cursor.fetchone()
+        data = None
+        with guest.cursor.execute(query):
+            row = guest.cursor.fetchone()
             while row:
                 if username == row[1]:
                     # Returns a List (if username found)
-                    return row
-                row = self.cursor.fetchone()
+                    data = row
+                row = guest.cursor.fetchone()
         # OR returns a boolean if username not found
-        return False
+        return data if data != None else False
 
     # Function for checking if username exists and password matches
     def check_login(self, login, password):
         data = self.credential_manager(login)
 
-        if isinstance(data, list):
-            if checkhash(data[2], password):
+        if data != False:
+            if self.checkhash(data[2], password):
                 # Returns a String
-                return data[3]
+                return data[-1]
         # OR returns a boolean
         # If password does not match
         # If 'data' returned is a boolean (username not found)
@@ -63,7 +65,7 @@ class Authentication(Connection):
         data = self.credential_manager(username)
 
         # Checks if data exists (is list)
-        if isinstance(data, list):
+        if data != False:
             # Creates a hash of the new password
             password = hashpass(new_password)
             # Updates that password into db
