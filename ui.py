@@ -23,21 +23,26 @@ def body():
         print("""\nPick an option:
                     1. Passenger booking manager
                     2. Flight manager
-                    3. EXIT"""
+                    3. EXIT""")
         # if the user inputs an invalid option the code runs again
         try:
             choice_0 = int(input("--->  "))
+            try: 
+                if choice_0 in range(1, 4):
+                    continue
+            except:
+                continue
         except:
             continue
     
 
     if choice_0 == 1:
         while True:
-        print("""\nPick an option:
+            print("""\nPick an option:
                     1. Make a booking
                     2. Change the details of an existing booking
                     3. Cancel a booking
-                    3. EXIT"""
+                    4. EXIT""")
         
         # if the user inputs an invalid option the code runs again
         try:
@@ -45,23 +50,7 @@ def body():
         except:
             continue
     
-
-
-    elif choice_0 == 2:
-        while True:
-        print("""\nPick an option:
-                    1. Make a flight route
-                    2. View flight routes
-                    3. EXIT"""
-        
-        # if the user inputs an invalid option the code runs again
-        try:
-            choice_1 = int(input("--->  "))
-        except:
-            continue
-    
-    
-    
+    # 
     if choice_1 == 1:
         while True:
             print("\nIn order to make a booking, please answer the following questions: ")
@@ -84,7 +73,7 @@ def body():
                     min_home_address = input("Enter the minor home address:\n ")
             elif choice_1_1 =="no":
                 continue
-            departure_date = input("")
+            departure_date = input("What day do you wish to depart?\n ")
             
             # list of cities and countries combined
             atlas = [] 
@@ -105,4 +94,46 @@ def body():
 
     elif choice_1 == 2:
         while True:
+            print("""\nPick an option:
+                    1. Change passenger information
+                    2. Change flight details
+                    3. EXIT"""
+
+        # if the user inputs an invalid option the code runs again
+        try:
+            choice_1_2 = int(input("--->  "))
+        except:
+            continue
+
+        if choice_1_2 == 1:
+            while True:
+                print("""\nPick an option:
+                        1. Change passport number
+                        2. Change other passenger information
+                            3. EXIT"""
+    elif choice_1 == 3:
+            while True:
+    
+    elif choice_1_2_1 == 1:
+        while True:
+        print("""\nPick an option:
+                    1. Make a flight route
+                    2. View flight routes
+                    3. EXIT"""
+        
+choice_1_2_1
+
+
+    elif choice_0 == 2:
+        while True:
+        print("""\nPick an option:
+                    1. Make a flight route
+                    2. View flight routes
+                    3. EXIT"""
+        
+        # if the user inputs an invalid option the code runs again
+        try:
+            choice_1 = int(input("--->  "))
+        except:
+            continue
     
