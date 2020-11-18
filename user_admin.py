@@ -45,14 +45,33 @@ class Admin(Staff):
 
     # takes flight number string
     # and any new information as dictionary
-    def edit_flight(self, flight_ref, **kwargs):
-        # Returns True False
+    def edit_flight(self, **kwargs):
         pass
 
     # Same as above but takes all info as dict
-    def add_flight(self, **kwargs):
-        # True / False
-        pass
+    def add_flight(self, details):
+        plane_columns = [
+            "plane_type",
+            "plane_capacity",
+            "plane_size",
+            "fuel_capacity",
+            "speed",
+            "weight",
+            "seats_available",
+            "fuel_per_km",
+            "maintenance_data",
+        ]
+        journey_columns = []
+        plane_details = []
+        journey_details = []
+        for k, v in details.items():
+            if k in plane_columns:
+                plane_details.append(v)
+            elif k in journey_columns:
+                journey_details.append(v)
+
+        plane_query = f"INSERT INTO plane ({', '.join(plane_columns)}) VALUES ("
+        print(plane_query)
 
     def remove_flight(self, flight_ref):
         pass
@@ -60,10 +79,18 @@ class Admin(Staff):
 
 def main():
     test = Admin("dev", "dev")
-    test.add_staff("SomeUser", "Password")
-    test.remove_staff("SomeUser")
-    test.change_permissions("farah", "admin")
-    print(test.view_user("dev"))
+    plane_details = {
+        "plane_type": "plane",
+        "plane_capacity": 100,
+        "plane_size": "M",
+        "fuel_capacity": 120,
+        "speed": 400,
+        "weight": 12000,
+        "seats_available": 37,
+        "fuel_per_km": 12,
+        "maintenance_data": "2020-08-11",
+    }
+    test.add_flight(plane_details, "hi")
 
 
 if __name__ == "__main__":
