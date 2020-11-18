@@ -7,7 +7,8 @@ class TestGuest(unittest.TestCase):
     test_guest = Guest()
 
     def test_all_flights(self):
-
+        # Checking that some data is successfully retrieved from the database when the method is called
+        self.assertNotEqual(self.test_guest.all_flights(), False)
 
     def test_display_flight(self):
         # Checking that some data is returned from the method when called with a valid flight reference
