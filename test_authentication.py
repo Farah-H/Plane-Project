@@ -23,7 +23,7 @@ class TestAuthentication(unittest.TestCase):
     def test_db_credentials(self):
         # Checking if an exception is raised when the user can't log in with the provided details
         self.assertRaises(Exception, self.test_authen.db_credentials(False))
-        # Checking if
+        # Checking if the method returns the correct data for the given user that can log in (as either admin or user)
         checking_admin_tuple = ("jake", "admin")
         self.assertTupleEqual(checking_admin_tuple, self.test_authen.db_credentials("admin"))
         checking_user_tuple = ("user", "user")

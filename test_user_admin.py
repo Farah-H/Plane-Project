@@ -14,9 +14,9 @@ class TestAdmin(unittest.TestCase):
 
     def test_remove_staff(self):
         # Checking the result when trying to delete a staff that doesn't exist
-        self.assertTrue(self.test_admin.remove_staff("barrybluejeans"))
+        self.assertFalse(self.test_admin.remove_staff("barrybluejeans"))
         # Checking the result when trying to remove someone that does exist
-        self.assertFalse(self.test_admin.remove_staff("new_staff"))
+        self.assertTrue(self.test_admin.remove_staff("new_staff"))
 
     def test_change_permissions(self):
         # Checking the result when trying to change an existing users permissions
