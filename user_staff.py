@@ -14,8 +14,14 @@ from authentication import Authentication
 class Staff(Authentication):
     # Loads table data
     def get_data(self, table_name):
-        # Returns list
-        pass
+        data = []
+        query = f"SELECT * FROM {table_name}"
+        with self.cursor.execute(query):
+            row = self.cursor.fetchone()
+            while row:
+                data.append(row)
+                row = self.cursor.fetchone()
+        return data if len(data) > 0 else False
 
     # No idea what information goes in ask Jake
     def add_passanger(self, *args):

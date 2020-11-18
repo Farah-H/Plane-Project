@@ -1,5 +1,6 @@
 from authentication import Authentication
 from user_staff import Staff
+from db_backup import BackupData
 
 ### Admin can ###
 # Do everything a Staff Member can
@@ -10,6 +11,11 @@ from user_staff import Staff
 
 
 class Admin(Authentication):
+    def backup_table(self, table_name, file_name):
+        back_up = BackupData(self.db_login, self.db_login, table_name, file_name)
+        data = back_up.backup_handler()
+        return data if data != None else False
+
     # These are self explanatory
     def add_staff(self, username, password):
         query = f"INSERT INTO credentials (username, password, permissions) VALUES ('{username}', '{password}', 'user')"
