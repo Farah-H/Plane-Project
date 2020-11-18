@@ -14,10 +14,12 @@ class Guest(Connection):
     def all_flights(self):
         data = []
         query = "SELECT * FROM journey_details"
+        count = 0
         with self.cursor.execute(query):
             row = self.cursor.fetchone()
-            while row:
+            while row and count < 10:
                 data.append(row)
+                count += 1
                 row = self.cursor.fetchone()
         return data if len(data) > 0 else False
 
@@ -29,16 +31,3 @@ class Guest(Connection):
             row = self.cursor.fetchall()
             data = row
         return data if data != None else False
-
-    ###########################
-    # PLACE HOLDER DO NOT USE #
-    ###########################
-    def get_table(self, table_name):
-        data = []
-        query = f"SELECT * FROM {table_name}"
-        with self.cursor.execute(query):
-            row = self.cursor.fetchone()
-            while row:
-                data.append(row)
-                row = self.cursor.fetchone()
-        return data if len(data) > 0 else False
