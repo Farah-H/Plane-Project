@@ -9,23 +9,33 @@ from user_staff import Staff
 # Can add / remove / edit all flight information
 
 
-class Admin(Authentication, Staff):
+class Admin(Authentication):
     # These are self explanatory
-    # All return True / False
-
     def add_staff(self, username, password):
-        pass
+        query = f"INSERT INTO credentials (username, password, permissions) VALUES ('{username}', '{password}', 'user')"
+        with self.cursor.execute(query):
+            print("Succesfully added the user!")
+        self.connection.commit()
 
     def remove_staff(self, username):
-        pass
+        query = f"DELETE FROM credentials WHERE username = '{username}'"
+        with self.cursor.execute(query):
+            print("Successfully deleted the user!")
+        self.connection.commit()
 
     def change_permissions(self, username, new_perm):
-        pass
+        query = f"UPDATE credentials SET permissions = '{new_perm}' WHERE username = '{username}'"
+        with self.cursor.execute(query):
+            print("Successfully altered user's permissions!")
+        self.connection.commit()
 
     # View's all information about user
     def view_user(self, username):
-        # Returns list
-        pass
+        data = None
+        query = f"SELECT * FROM credentials WHERE username = '{username}'"
+        with self.cursor.execute(query):
+            data = self.cursor.fetchall()
+        return data if data != None else False
 
     # takes flight number string
     # and any new information as dictionary
@@ -37,3 +47,15 @@ class Admin(Authentication, Staff):
     def add_flight(self, **kwargs):
         # True / False
         pass
+
+
+def main():
+    test = Admin("dev", "dev")
+    test.add_staff("SomeUser", "Password")
+    test.remove_staff("SomeUser")
+    test.change_permissions("farah", "admin")
+    print(test.view_user("dev"))
+
+
+if __name__ == "__main__":
+    main()
