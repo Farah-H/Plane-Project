@@ -41,7 +41,9 @@ Each heading will have a list of tests that need to be created to check the func
 - When trying to add a flight with the add_flight() method, we should return True if the data is all correct, and
  False if there are issues with the data (e.g. destinations and departure locations that aren't in the database
  , references to flights that don't exist, etc.)
-## Guests class
+## Guest class
+- 
+## Staff class
 - 
 ## StaffMember class
 - Can the StaffMember log in to be able to perform tasks that only Staff can perform?
