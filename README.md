@@ -6,7 +6,8 @@ Each heading will have a list of tests that need to be created to check the func
     understand and use.
 ## ClientInformation class tests
 - If we use a getter for any of the class attributes, it should return the attribute for that instance
-- Should be a fullname() method that returns the users full name including their title to easily output this to the user
+- Should be a fullname property that returns the users full name including their title to easily output this to the
+ user
 ## Connection class tests
 - If we instantiate the class does it successfully create a connection with the database
 ## Authentication class tests
@@ -42,7 +43,7 @@ Each heading will have a list of tests that need to be created to check the func
  False if there are issues with the data (e.g. destinations and departure locations that aren't in the database
  , references to flights that don't exist, etc.)
 ## Guest class
-- 
+- If 
 ## Staff class
 - 
 ## StaffMember class
@@ -61,37 +62,35 @@ Each heading will have a list of tests that need to be created to check the func
 - If a StaffMember or a Passenger without the right permissions attempts to execute any of the above functionality
 , does this work?
 
-## Front end UI tests
+## Front end UI observations on iteration 1
 - Are the attributes in the ```__init__``` method validated e.g. a negative flight duration or an arrival time before
- the departure time
-- Are the departure and arrival times going to be strings or datetime objects?
+ the departure time? 
+ 
+ **This is handled with constraints in the DB**
+- Are the departure and arrival times going to be strings or datetime objects? 
+
+**It will use a Datetime object**
 - Is the body method meant to be inside the Flight class?
-- Good handling of invalid options with except: continue block
-- Are the ifs and elifs in the loops?
-- Infinite loop when making choices?
-    - Except statement only runs when a user inputs a non numeric, doesn't cover if the user inputs numbers that aren't 
-      1, 2, or 3
-- Check email address for the inclusion of the '@' character to validate it
-- Check for non yes or no responses to the minor question
+
+**No, this was a holdover from a previous iteration which has now been removed**
+- Good handling of invalid options with except: continue block, however, the except statement only runs when a user
+ inputs a non numeric. This means it doesn't cover if the user inputs numbers that aren't 1, 2, or 3
+
+**This has been changed to catch all possible user inputs**
+- Ifs and elifs aren't within the loops causing an infinite loop?
+
+**These blocks have been moved into the loops, amending the issue**
+- Good check on the validity of the departure and landing destinations
+
+## Front end UI observations on iteration 2
+
 - When receiving the minor's date of birth we should check to see if they're young enough to be considered a minor
 , otherwise we could lose money (we should also specify the cutoff age before asking if they are travelling with any
  minors)
-- No message on what the user should input for ```departure_date```
-- Good check on the validity of the departure and landing destinations
-## 
-## Passenger class tests
-- When initialised, are the passengers information for their Passport, Visa, and Ticket Number assigned correctly?
-- If we call the ```set_personal_info()``` method, are the attributes set accordingly
-    - Does this method handle invalid inputs e.g. having a date of birth in the future
-    - Can it cope with inputting information in different formats i.e. having dob be 01/01/1956 but also 01-01-1956
-    , and if not is it specified to the user which format is desired?
-    - Because this is a system to be used by people from all over the world, does it account for different dob orders
-     i.e. "DD/MM/YYYY" vs "MM/DD/YYYY" in different countries, and if not does it make it clear which order the user
-      should use when inputting this?
-- !Is it clear what the user is inputting for each attribute and what form it should take?
-## ?Security tests
-- Does the check_passport() function correctly identify valid and non valid passports i.e. checking the expiration
+ 
+- Does the security_check() function correctly identify valid and non valid passports i.e. checking the expiration
  date, or observations state they can't travel to certain countries, or their name/other personal details do not
   match the ones given at the airport
+
 - Can the check_visa() function correctly query the database to see if the destination country requires a visa?
     - Can the function then validate the user's visa
