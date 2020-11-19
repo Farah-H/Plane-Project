@@ -43,7 +43,15 @@ Each heading will have a list of tests that need to be created to check the func
  False if there are issues with the data (e.g. destinations and departure locations that aren't in the database
  , references to flights that don't exist, etc.)
 ## Guest class
-- If 
+- If a guest tries to view all of the flights, the all_flights() method should be called and return the relevant data
+ for all flights found in the database. If no flights are found it should return False.
+- If a guest tries to view all of the flights going to a specific destination with the display_flight_destination
+() method, it should return them a non empty list containing all of the relevant flight information for that
+ destination. If it is passed the wrong data type or there are no flights travelling to the destination it should
+  return False
+- If a guest tries to view all of the flights on a given day with the display_flight_date() method, it should return
+ a non empty list containing the relevant flight information for that day. If no flights are travelling that day or
+  an invalid date is provided it should return False.
 ## Staff class
 - 
 ## StaffMember class
