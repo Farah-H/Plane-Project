@@ -1,4 +1,5 @@
 from db_connection import Connection
+from datetime import datetime
 
 
 class Guest(Connection):
@@ -42,12 +43,3 @@ class Guest(Connection):
                 row = self.cursor.fetchone()
 
         return data if len(data) > 0 else False
-
-
-def main():
-    test = Guest()
-    print(test.all_flights())
-
-
-if __name__ == "__main__":
-    main()

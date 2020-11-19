@@ -1,10 +1,83 @@
 import os
 import getpass
 import time
-import datetime
+import random
+from datetime import datetime
 from user_guest import Guest
 from user_staff import Staff
 from user_admin import Admin
+
+
+def personal_information(adult_count, teen_count, children_count):
+    final_output = []
+    while True:
+        print("We need some information about the main passenger.")
+
+        passport = input("Passport Number: ")
+        fname = input("First Name: ")
+        lname = input("Last Name: ")
+        print("Date of birth. Format: YYYY MM DD")
+        dob = input("=> ").split(" ")
+        if len(dob) == 3:
+            try:
+                dob = "-".join(dob)
+            except:
+                print("Invalid date of birth!\nPlease try again")
+            else:
+                print(
+                    f"{fname} {lname}.\nPassport Number: {passport}.\nDate of birth: {dob}\nIs that correct?"
+                )
+                correct = input("=> ")
+                if correct == "yes":
+                    final_output.append(
+                        [
+                            passport,
+                            fname,
+                            lname,
+                            dob,
+                            f"F{random.randint(100, 999)}",
+                            "NULL",
+                        ]
+                    )
+                    main_pass = True
+        else:
+            print("Invalid date of birth provided!\nPlease try again")
+            return False
+
+        if main_pass:
+            count = 0
+            while count < sum(adult_count, teen_count, children_count):
+                print("We need some information about the other passengers.")
+
+                passport = input("Passport Number: ")
+                fname = input("First Name: ")
+                lname = input("Last Name: ")
+                print("Date of birth. Format: YYYY MM DD")
+                dob = input("=> ").split(" ")
+                if len(dob) == 3:
+                    try:
+                        dob = "-".join(dob)
+                    except:
+                        print("Invalid date of birth!\nPlease try again")
+                    else:
+                        print(
+                            f"{fname} {lname}.\nPassport Number: {passport}.\nDate of birth: {dob}\nIs that correct?"
+                        )
+                        correct = input("=> ")
+                        if correct == "yes":
+                            final_output.append(
+                                [
+                                    passport,
+                                    fname,
+                                    lname,
+                                    dob,
+                                    final_output[0][0],
+                                    f"F{random.randint(100, 999)}",
+                                ]
+                            )
+                else:
+                    print("Invalid date of birth provided!\nPlease try again")
+                    return False
 
 
 def booking_loop(user, data, amount):
@@ -12,23 +85,138 @@ def booking_loop(user, data, amount):
     while True:
         print("-= Ticket Information =-=")
 
-        # Main passenger info
-        # Generate seat number
-        # Find out the ticket price (£100 default)
-        # Confirm information
-        # Ask about children
-        # Loop above through each child
-        # Set `dependant_on` to main passenger
+        if amount > 1:
+            print(
+                "Are you travelling with children under the age of 13?\nInput the amount of children or use '0' for none."
+            )
 
-        print("What flight would you like to book? (or say 'exit')\n")
-        flight_ref = input("=> ")
-        if flight_ref != "exit":
-            if flight_ref.isdigit():
-                flight_ref = int(flight_ref)
+            try:
+                children = int(input("=> "))
+            except:
+                print("Please input a valid integer number")
             else:
-                print("Please input an integer number!")
+                temp_amount = amount - children
+
+                if temp_amount > 0:
+                    print(
+                        "Are you travelling with any teens aged 13-18?\nInput the amount of teenagers or use '0' for none."
+                    )
+
+                    try:
+                        teens = int(input("=> "))
+                    except:
+                        print("Please input a valid integer number")
+                    else:
+                        final_amount = temp_amount - teens
+                        output = []
+                        if final_amount != 0:
+                            adults = final_amount
+                            teenagers = teens
+                            child = children
+                            output = personal_information(adults, teenagers, child)
+                            if output == False:
+                                print(
+                                    "You've provided incorrect information.\nPlease try booking again!"
+                                )
+                                break
+                            else:
+                                output.insert(0, "NULL")
+                                output.insert(0, datetime.now())
+                                output.insert(0, "British Airways")
+                                output.insert(0, user.staff_id)
+                                output.insert(0, data[0])
+                                price = 0
+                                if adults > 0:
+                                    price = price + (100 * adults)
+                                if teenagers > 0:
+                                    price = price + (80 * teenagers)
+                                if child > 0:
+                                    price = price + (60 * child)
+
+                                output.insert(-1, price)
+                        else:
+                            adults = 0
+                            teenagers = teens
+                            child = children
+                            output = personal_information(adults, teenagers, child)
+                            if output == False:
+                                print(
+                                    "You've provided incorrect information.\nPlease try booking again!"
+                                )
+                                break
+                            else:
+                                output.insert(0, "NULL")
+                                output.insert(0, datetime.now())
+                                output.insert(0, "British Airways")
+                                output.insert(0, user.staff_id)
+                                output.insert(0, data[0])
+                                price = 100
+                                if teenagers > 0:
+                                    price = price + (80 * teenagers)
+                                if child > 0:
+                                    price = price + (60 * child)
+
+                                output.insert(-1, price)
+
+                        for ticket in output:
+                            if isinstance(ticket, list):
+                                user.add_passengers(
+                                    output[0],
+                                    output[1],
+                                    output[2],
+                                    output[3],
+                                    output[4],
+                                    ticket,
+                                    output[-1],
+                                )
+
+                        print(
+                            f"Total ticket price: {output[-1]}.\nThank you for using our services!"
+                        )
+                        break
+
         else:
-            break
+            print("We need your personal information to complete the booking.")
+
+            passport = input("Passport Number: ")
+            fname = input("First Name: ")
+            lname = input("Last Name: ")
+            print("Date of birth. Format: YYYY MM DD")
+            dob = input("=> ").split(" ")
+            if len(dob) == 3:
+                try:
+                    dob = "-".join(dob)
+                except:
+                    print("Invalid date of birth!\nPlease try again")
+                else:
+                    print(
+                        f"{fname} {lname}.\nPassport Number: {passport}.\nDate of birth: {dob}\nIs that correct?"
+                    )
+                    correct = input("=> ")
+                    if correct == "yes":
+                        output = [
+                            passport,
+                            fname,
+                            lname,
+                            dob,
+                            f"F{random.randint(100, 999)}",
+                        ]
+                        output.insert(0, "NULL")
+                        output.insert(0, datetime.now())
+                        output.insert(0, "British Airways")
+                        output.insert(0, user.staff_id)
+                        output.insert(0, data[0])
+                        output.insert(-1, 100)
+
+                        user.add_single_passenger(output)
+                        print(
+                            f"Total ticket price: £100.\nThank you for using our services!"
+                        )
+                        break
+            else:
+                print("Invalid date of birth provided!\nPlease try again")
+                return False
+
         time.sleep(3)
         clear()
 
@@ -36,19 +224,7 @@ def booking_loop(user, data, amount):
 def booking(user):
     clear()
     while True:
-        print("-= Booking System =-=")
-
-        # What fight is being booked
-        # Main passenger info
-        # Get available Seats
-        # Get Capacity
-        # Generate seat number
-        # Find out the ticket price (£100 default)
-        # Confirm information
-        # Ask about children
-        # Loop above through each child
-        # Set `dependant_on` to main passenger
-
+        print("-= Booking System =-")
         print("What flight would you like to book? (or say 'exit')\n")
         flight_ref = input("=> ")
         if flight_ref != "exit":
@@ -56,12 +232,13 @@ def booking(user):
                 flight_ref = int(flight_ref)
                 try:
                     flight_data = user.display_flight_id(flight_ref)
-                except:
+                except Exception as e:
+                    print(e)
                     print("There was an issue with database. Please try again later!")
                 else:
                     if flight_data != False:
-                        print(f"Available seat number: {flight_data[8]}")
-                        if flight_data[8] > 0:
+                        print(f"Available seat number: {flight_data[0][7]}")
+                        if flight_data[0][7] > 0:
                             while True:
                                 print(
                                     "How many tickets would you like to book including yourself? (or say 'exit')"
@@ -71,9 +248,9 @@ def booking(user):
                                 if ticket_amount != "exit":
                                     if ticket_amount.isdigit():
                                         ticket_amount = int(ticket_amount)
-                                        if flight_data[8] >= ticket_amount:
+                                        if flight_data[0][7] >= ticket_amount:
                                             booking_loop(
-                                                user, flight_data, ticket_amount
+                                                user, flight_data[0], ticket_amount
                                             )
                                         else:
                                             print(
@@ -83,7 +260,8 @@ def booking(user):
                                         print("Please input an integer number!")
                                 else:
                                     break
-
+                        else:
+                            print("There is not enough seats available.")
                     else:
                         print("This flight doesn't exist!")
             else:
@@ -400,7 +578,7 @@ def staff_menu(user):
                         departure = input("=> ").split(" ")
                         if len(departure) == 3:
                             try:
-                                departure = datetime.datetime(
+                                departure = datetime(
                                     int(departure[0]),
                                     int(departure[1]),
                                     int(departure[2]),
@@ -482,10 +660,11 @@ def user_management(user):
         )
         choice = input("=> ")
         if choice.isdigit():
+            choice = int(choice)
             if choice == 1:
                 print("Please provide a username and password for the new user.")
                 username = input("Username: ")
-                password = input("Password: ")
+                password = getpass.getpass("Password: ")
 
                 try:
                     user.add_staff(username, password)
@@ -654,7 +833,7 @@ def plane_management(user):
                     "weight",
                     "seats_available",
                     "fuel_per_km",
-                    "maintenance_data",
+                    "maintenance_date",
                 ]
                 for option in plane_columns:
                     display = option
@@ -662,7 +841,7 @@ def plane_management(user):
                         user_input = input(
                             f"{str(display).replace('_', ' ').title()}: "
                         )
-                        if user_input.isalpha():
+                        if user_input.isalpha() or option == "maintenance_date":
                             details[option] = user_input
                             break
                         elif user_input.isdigit():
@@ -856,7 +1035,7 @@ def guest_menu():
                 departure = input("=> ").split(" ")
                 if len(departure) == 3:
                     try:
-                        departure = datetime.datetime(
+                        departure = datetime(
                             int(departure[0]), int(departure[1]), int(departure[2])
                         )
                     except:

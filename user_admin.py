@@ -1,6 +1,7 @@
 from authentication import Authentication
 from user_staff import Staff
 from db_backup import BackupData
+from datetime import datetime
 
 
 class Admin(Staff):
@@ -75,7 +76,7 @@ class Admin(Staff):
             "weight",
             "seats_available",
             "fuel_per_km",
-            "maintenance_data",
+            "maintenance_date",
         ]
         plane_details = []
         for k, v in details.items():
@@ -100,23 +101,3 @@ class Admin(Staff):
         with self.cursor.execute(query):
             print("Successfully deleted the plane!")
         self.connection.commit()
-
-
-def main():
-    test = Admin("dev", "dev")
-    plane_details = {
-        "plane_type": "plane",
-        "plane_capacity": 100,
-        "plane_size": "M",
-        "fuel_capacity": 120,
-        "speed": 400,
-        "weight": 12000,
-        "seats_available": 37,
-        "fuel_per_km": 12,
-        "maintenance_data": "2020-08-11",
-    }
-    test.add_plane(plane_details)
-
-
-if __name__ == "__main__":
-    main()
