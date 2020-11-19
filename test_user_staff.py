@@ -16,7 +16,7 @@ class TestStaff(unittest.TestCase):
         # Checking if the method successfully changes a passenger's details if put on the wrong flight
         self.assertTrue(self.test_staff.change_passenger("Jeff Bridges", "journey_id", 9))
         # Checking if the method successfully changes a passenger's details if the passenger does not exist
-        self.assertTrue(self.test_staff.change_passenger("Barry Blue Jeans", "journey_id", 9))
+        self.assertFalse(self.test_staff.change_passenger("Barry Blue Jeans", "journey_id", 9))
 
     def test_display_flight(self):
         # Format of list is [terminal_id, departure_time, arrival_time, airport_code(dep_from), airport_code(arrive_at)]
@@ -24,20 +24,8 @@ class TestStaff(unittest.TestCase):
         # Checking if the correct data is retrieved from the database when the method is called
         self.assertListEqual(self.test_staff.display_flight(8), expected_list)
 
-    def test_get_data(self):
-        # Checking if data can be successfully queried from the database
-        self.assertIsNotNone(self.test_staff.get_data("journey_details"))
-        # Checking the output when the table is empty or does not exist
-        self.assertFalse(self.test_staff.get_data("journey_detailz"))
-
     def test_display_passenger(self):
         # Checking if passenger data is returned for a passenger that exists in the database
-        self.assertIsNotNone(self.test_staff.display_passenger("Jeff", "Bridges"))
+        self.assertNotEqual(self.test_staff.display_passenger("Jeff", "Bridges"), False)
         # Checking if nothing is returned for a passenger that doesn't exist in the database
-        self.assertIsNone(self.test_staff.display_passenger("Barry", "Blue Jeans"))
-
-    def test_check_seats(self):
-        # Checking if the correct seat number is returned when given a flight reference(journeyid) and passenger id
-        self.assertEqual(self.test_staff.check_seats(8, 1), 54)
-        # Checking what is output when looking for a seat number of a passenger that isn't on that flight
-        self.assertFalse(self.test_staff.check_seats(8, 18))
+        self.assertFalse(self.test_staff.display_passenger("Barry", "Blue Jeans"))

@@ -53,10 +53,16 @@ Each heading will have a list of tests that need to be created to check the func
  a non empty list containing the relevant flight information for that day. If no flights are travelling that day or
   an invalid date is provided it should return False.
 ## Staff class
-- A staff should be able to add a passenger with the add_passenger() method which will return True if this was
+- A staff member should be able to add a passenger with the add_passenger() method which will return True if this was
  successful (i.e. their information is correct) and False if their information is invalid (i.e. their Passport Number
   is in the wrong format)
-- 
+- A staff member should be able to change a passengers details with the change_passenger() method. When calling this
+ method with existing user details, the details should be changed and the method should return True, if the passenger
+  does not exist, the data should not be changed and the method should return False
+- A staff member should be able to return the correct details for a specific flight from the database with the
+ display_flight() method
+- A staff member should be able to return the correct details for a specific passenger from the database with the
+ display_passenger method if the passenger exists, if they don't exist the method should return False
 ## StaffMember class
 - Can the StaffMember log in to be able to perform tasks that only Staff can perform?
 - Can a StaffMember change their details e.g. regularly changing their passwords to ensure the system is secure?
