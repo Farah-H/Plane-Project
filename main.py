@@ -8,14 +8,24 @@ from user_admin import Admin
 
 
 def booking(user):
-    pass
+    clear()
+    while True:
+        print(
+            """
+
+            """
+        )
+        choice = input("=> ")
+        if choice.isdigit():
+            choice = int(choice)
+            pass
 
 
 def staff_menu(user):
     clear()
     while True:
         print(
-            """
+            f"""
 -= Staff Menu =-
 Select one of the options
 
@@ -25,7 +35,7 @@ Select one of the options
 4. Display flight information
 5. Check available seats
 6. Security Check
-7. Log out
+7. {"Log out" if user.permission_level == "user" else "Go Back"}
         """
         )
         choice = input("=> ")
@@ -50,7 +60,7 @@ Select one of the options
                 print("That's not a valid option\nPlease try again")
 
         else:
-            print("Please input a integer number!")
+            print("Please input an integer number!")
         time.sleep(3)
         clear()
 
@@ -126,7 +136,179 @@ Select one of the options
             else:
                 print("That's not a valid option\nPlease try again")
         else:
-            print("Please input a integer number!")
+            print("Please input an integer number!")
+
+
+def flight_management(user):
+    clear()
+    while True:
+        print(
+            """
+-= Flight Management =-
+Select one of the options
+
+1. Add a new flight
+2. Remove a flight
+3. Edit a flight
+4. Go back
+            """
+        )
+        choice = input("=> ")
+        if choice.isdigit():
+            choice = int(choice)
+            if choice == 1:
+                print("Please input the following information:")
+                details = {}
+                journey_columns = [
+                    "plane_id",
+                    "departure_time",
+                    "arrival_time",
+                    "departing_from",
+                    "arriving_to",
+                ]
+                for option in journey_columns:
+                    display = option
+                    while True:
+                        user_input = input(
+                            f"{str(display).replace('_', ' ').title()}: "
+                        )
+                        if user_input.isalpha():
+                            details[option] = user_input
+                            break
+                        elif user_input.isdigit():
+                            details[option] = int(user_input)
+                            break
+                        else:
+                            print("Not a valid input. Please try again")
+                try:
+                    user.add_flight(details)
+                except:
+                    print(
+                        "Failed to add the plane.\nCheck that your details are correct and try again."
+                    )
+            elif choice == 2:
+                print("Please input a flight ID number.")
+                user_input = input("=> ")
+                if user_input.isdigit():
+                    try:
+                        user.remove_flight(user_input)
+                    except:
+                        print("This flight doesn't exist.")
+                else:
+                    print("Please input an integer number")
+            elif choice == 3:
+                print("Please input the information needed to perform an edit.")
+
+                flight_ref = input("Flight ID: ")
+                column = input("Column name: ")
+                new_info = input("New information: ")
+
+                if flight_ref.isdigit():
+                    try:
+                        user.edit_flight(flight_ref, column, new_info)
+                    except:
+                        print("This flight doesn't exist or wrong data was provided.")
+                else:
+                    print("Please input an integer number for Flight ID")
+
+            elif choice == 4:
+                clear()
+                break
+            else:
+                print("That's not a valid option\nPlease try again")
+
+        else:
+            print("Please input an integer number!")
+        time.sleep(3)
+        clear()
+
+
+def plane_management(user):
+    clear()
+    while True:
+        print(
+            """
+-= Plane Management =-
+Select one of the options
+
+1. Add a new plane
+2. Remove a plane
+3. Edit a plane
+4. Go back
+            """
+        )
+        choice = input("=> ")
+        if choice.isdigit():
+            choice = int(choice)
+            if choice == 1:
+                print("Please input the following information:")
+                details = {}
+                plane_columns = [
+                    "plane_type",
+                    "plane_capacity",
+                    "plane_size",
+                    "fuel_capacity",
+                    "speed",
+                    "weight",
+                    "seats_available",
+                    "fuel_per_km",
+                    "maintenance_data",
+                ]
+                for option in plane_columns:
+                    display = option
+                    while True:
+                        user_input = input(
+                            f"{str(display).replace('_', ' ').title()}: "
+                        )
+                        if user_input.isalpha():
+                            details[option] = user_input
+                            break
+                        elif user_input.isdigit():
+                            details[option] = int(user_input)
+                            break
+                        else:
+                            print("Not a valid input. Please try again")
+                try:
+                    user.add_plane(details)
+                except:
+                    print(
+                        "Failed to add the plane.\nCheck that your details are correct and try again."
+                    )
+
+            elif choice == 2:
+                print("Please input a plane ID number.")
+                user_input = input("=> ")
+                if user_input.isdigit():
+                    try:
+                        user.remove_plane(user_input)
+                    except:
+                        print("This plane doesn't exist.")
+                else:
+                    print("Please input an integer number")
+            elif choice == 3:
+                print("Please input the information needed to perform an edit.")
+
+                plane_ref = input("Plane ID: ")
+                column = input("Column name: ")
+                new_info = input("New information: ")
+
+                if plane_ref.isdigit():
+                    try:
+                        user.edit_flight(plane_ref, column, new_info)
+                    except:
+                        print("This plane doesn't exist or wrong data was provided.")
+                else:
+                    print("Please input an integer number for Plane ID")
+            elif choice == 4:
+                clear()
+                break
+            else:
+                print("That's not a valid option\nPlease try again")
+
+        else:
+            print("Please input an integer number!")
+        time.sleep(3)
+        clear()
 
 
 def admin_menu(user):
@@ -151,13 +333,11 @@ Select one of the options
 
             if choice == 1:
                 user_management(user)
-            elif choice == 5:
-                pass
-            elif choice == 6:
-                pass
-            elif choice == 7:
-                pass
-            elif choice == 8:
+            elif choice == 2:
+                flight_management(user)
+            elif choice == 3:
+                plane_management(user)
+            elif choice == 4:
                 print("Please input the table you would like to back up and file name.")
                 print("Acceptable format: '.json'")
 
@@ -184,14 +364,16 @@ Select one of the options
                 else:
                     print("Unsuppored file format")
 
-            elif choice == 9:
+            elif choice == 5:
+                staff_menu(user)
+            elif choice == 6:
                 clear()
                 break
             else:
                 print("That's not a valid option\nPlease try again")
 
         else:
-            print("Please input a integer number!")
+            print("Please input an integer number!")
         time.sleep(3)
         clear()
 
@@ -326,7 +508,7 @@ Select one of the Options
                 print("That's not a valid option\nPlease try again")
 
         else:
-            print("Please input a integer number!")
+            print("Please input an integer number!")
 
 
 def clear():
