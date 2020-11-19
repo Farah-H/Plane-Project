@@ -2,13 +2,6 @@ from authentication import Authentication
 from user_staff import Staff
 from db_backup import BackupData
 
-### Admin can ###
-# Do everything a Staff Member can
-# Can add a new staff member
-# Change Staff Permissions
-# Can view all information (sensitive too)
-# Can add / remove / edit all flight information
-
 
 class Admin(Staff):
     def backup_table(self, table_name, file_name):
@@ -16,8 +9,8 @@ class Admin(Staff):
         data = back_up.backup_handler()
         return data if data != None else False
 
-    # These are self explanatory
     def add_staff(self, username, password):
+        password = self.hashpass(password)
         query = f"INSERT INTO credentials (username, password, permissions) VALUES ('{username}', '{password}', 'user')"
         with self.cursor.execute(query):
             print("Succesfully added the user!")
@@ -35,7 +28,6 @@ class Admin(Staff):
             print("Successfully altered user's permissions!")
         self.connection.commit()
 
-    # View's all information about user
     def view_user(self, username):
         data = None
         query = f"SELECT * FROM credentials WHERE username = '{username}'"
@@ -43,12 +35,9 @@ class Admin(Staff):
             data = self.cursor.fetchall()
         return data if data != None else False
 
-    # takes flight number string
-    # and any new information as dictionary
     def edit_flight(self, **kwargs):
         pass
 
-    # Same as above but takes all info as dict
     def add_flight(self, details):
         plane_columns = [
             "plane_type",
