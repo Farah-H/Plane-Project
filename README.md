@@ -53,6 +53,9 @@ Each heading will have a list of tests that need to be created to check the func
  a non empty list containing the relevant flight information for that day. If no flights are travelling that day or
   an invalid date is provided it should return False.
 ## Staff class
+- A staff should be able to add a passenger with the add_passenger() method which will return True if this was
+ successful (i.e. their information is correct) and False if their information is invalid (i.e. their Passport Number
+  is in the wrong format)
 - 
 ## StaffMember class
 - Can the StaffMember log in to be able to perform tasks that only Staff can perform?
