@@ -63,4 +63,12 @@ class Staff(Authentication):
         return data if len(data) > 0 else False
 
     def security_check(self, flight_ref):
-        pass
+        data = []
+        query = f"SELECT ticket_details.ticket_id, ticket_details.seat_number, passenger_details.first_name, passenger_details.last_name, passenger_details.passport_id, passenger_details.dependent_on from passenger_details inner join ticket_details on passenger_details.passenger_id = ticket_details.passenger_id WHERE ticket_details.booking_id = {flight_ref}"
+        with self.cursor.execute(query):
+            row = self.cursor.fetchone()
+            while row:
+                data.append(row)
+                row = self.cursor.fetchone()
+
+        return data if len(data) > 0 else False

@@ -21,8 +21,112 @@ def booking(user):
             pass
 
 
+def check_each_passenger(user, data):
+    clear()
+    while True:
+        print(
+            """
+        -= Passenger Check =-
+    Please input each passanger information one at a time.
+        """
+        )
+
+        fname = input("First Name: ")
+        lname = input("Last Name: ")
+        passport = input("Passport Number: ")
+        print("Date of birth. Format: YYYY MM DD")
+        dob = input("=> ").split(" ")
+
+        try:
+            dob = "-".join([int(a) for a in dob])
+        except:
+            print("Please input correct date format")
+        else:
+            while True:
+                print(
+                    f"{fname} {lname}.\nPassport number: {passport}.\nDate of birth: {dob}"
+                )
+                print("Is that correct?")
+                correct = input("=> ")
+
+                if correct == "yes":
+                    match = False
+                    for passenger in data:
+                        if (
+                            fname in passenger
+                            and lname in passenger
+                            and passport in passenger
+                            and dob in passenger
+                        ):
+                            match = True
+                            break
+                    if match:
+                        print("Passenger information is correct.")
+                    else:
+                        print("Passenger information is incorrect")
+                    break
+                elif correct == "no":
+                    print("Please input the information again.")
+                    break
+                else:
+                    print("Please input 'yes' or 'no'.")
+
+        more = True
+        while True:
+            print("Would you like to check another?")
+            choice = input("=> ")
+            if choice == "yes":
+                break
+            elif choice == "no":
+                more = False
+                break
+            else:
+                print("Please input 'yes' or 'no'.")
+        if not more:
+            break
+        time.sleep(3)
+        clear()
+
+
 def security_check(user):
-    pass
+    clear()
+    while True:
+        print(
+            f"""
+        -= Security Check =-
+    Please provide the flight number
+
+    """
+        )
+        choice = input("=> ")
+        if choice.isdigit():
+            choice = int(choice)
+            try:
+                data = user.security_check(choice)
+            except:
+                print("There was an issue with the database. Please try again later")
+            else:
+                if data != False:
+                    while True:
+                        print(
+                            "Would you like to see all the data before checking each passenger?"
+                        )
+                        user_input = input("=> ")
+                        if user_input == "yes":
+                            ## NEEDS FORMATTING
+                            print(data)
+                            time.sleep(5)
+                            check_each_passenger(user, data)
+                            break
+                        elif user_input == "no":
+                            check_each_passenger(user, data)
+                            break
+                        else:
+                            print("Please input 'yes' or 'no'.")
+                else:
+                    print("There is no flight with this reference number.")
+        time.sleep(3)
+        clear()
 
 
 def staff_menu(user):
@@ -30,7 +134,7 @@ def staff_menu(user):
     while True:
         print(
             f"""
-    -= Staff Menu =-
+        -= Staff Menu =-
     Select one of the options
 
     1. Book a flight
@@ -227,7 +331,7 @@ def user_management(user):
     while True:
         print(
             """
-    -= User Management =-
+        -= User Management =-
     Select one of the options
 
     1. Add a new user
@@ -294,6 +398,8 @@ def user_management(user):
                 print("That's not a valid option\nPlease try again")
         else:
             print("Please input an integer number!")
+        time.sleep(3)
+        clear()
 
 
 def flight_management(user):
@@ -301,7 +407,7 @@ def flight_management(user):
     while True:
         print(
             """
-    -= Flight Management =-
+        -= Flight Management =-
     Select one of the options
 
     1. Add a new flight
@@ -385,7 +491,7 @@ def plane_management(user):
     while True:
         print(
             """
-    -= Plane Management =-
+        -= Plane Management =-
     Select one of the options
 
     1. Add a new plane
@@ -473,7 +579,7 @@ def admin_menu(user):
     while True:
         print(
             """
-    -= Administrator Menu =-
+        -= Administrator Menu =-
     Select one of the options
 
     1. Staff Management
@@ -540,7 +646,7 @@ def login_menu():
     while True:
         print(
             """
-    -= Login =-
+        -= Login =-
     Please input your login details
         """
         )
@@ -574,7 +680,7 @@ def guest_menu():
     while True:
         print(
             """
-    -= Guest Menu =-
+        -= Guest Menu =-
     See all the flights!
 
     1. View next 10 flights
@@ -643,7 +749,7 @@ def main():
     while True:
         print(
             """
-    -= London Heathrow Airport =-
+        -= London Heathrow Airport =-
     Select one of the Options
 
     1. Guest Menu
@@ -667,6 +773,8 @@ def main():
 
         else:
             print("Please input an integer number!")
+        time.sleep(3)
+        clear()
 
 
 def clear():
