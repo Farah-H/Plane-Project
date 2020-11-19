@@ -21,6 +21,10 @@ def booking(user):
             pass
 
 
+def security_check(user):
+    pass
+
+
 def staff_menu(user):
     clear()
     while True:
@@ -44,9 +48,63 @@ def staff_menu(user):
             if choice == 1:
                 booking(user)
             elif choice == 2:
-                pass
+                while True:
+                    print(
+                        "Please input the following information to edit the passenger."
+                    )
+
+                    passport = input("Passport number: ")
+                    column = input("Column to change: ")
+                    new_info = input("New information: ")
+
+                    print(
+                        f"Passport number {passport}, changing {column} information.\nNew information: {new_info}"
+                    )
+                    print("Is that correct?")
+                    confirm = input("=> ")
+                    if confirm == "yes":
+                        try:
+                            user.change_passenger(passport, column, new_info)
+                        except:
+                            print("Passport number not found")
+                        else:
+                            break
+                    elif confirm == "no":
+                        pass
+                    else:
+                        print("Please input a 'yes' or 'no' answer.")
             elif choice == 3:
-                pass
+                while True:
+                    print("Please provide the first and last name of the passenger.")
+                    fname = input("First Name: ")
+                    lname = input("Last Name: ")
+
+                    if fname.isalpha() and lname.isalpha():
+                        print(f"{fname} {lname}, is that correct?")
+                        confirm = input("=> ")
+                        if confirm == "yes":
+                            try:
+                                data = user.display_passenger(fname, lname)
+                            except:
+                                print(
+                                    "There was an issue with the database. Please try again later."
+                                )
+                            else:
+                                if data != False:
+                                    ## NEEDS FORMATTING
+                                    print(data)
+                                    break
+                                else:
+                                    print("Passenger was not found!")
+                        elif confirm == "no":
+                            pass
+                        else:
+                            print("Please input a 'yes' or 'no' answer.")
+                    else:
+                        print(
+                            "Please only input alphabetical characters for first and last name."
+                        )
+
             elif choice == 4:
                 print(
                     """
@@ -151,7 +209,7 @@ def staff_menu(user):
                 else:
                     print("Please input an integer number!")
             elif choice == 6:
-                pass
+                security_check(user)
             elif choice == 7:
                 clear()
                 break
