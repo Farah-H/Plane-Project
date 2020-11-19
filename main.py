@@ -7,18 +7,91 @@ from user_staff import Staff
 from user_admin import Admin
 
 
+def booking_loop(user, data, amount):
+    clear()
+    while True:
+        print("-= Ticket Information =-=")
+
+        # Main passenger info
+        # Generate seat number
+        # Find out the ticket price (£100 default)
+        # Confirm information
+        # Ask about children
+        # Loop above through each child
+        # Set `dependant_on` to main passenger
+
+        print("What flight would you like to book? (or say 'exit')\n")
+        flight_ref = input("=> ")
+        if flight_ref != "exit":
+            if flight_ref.isdigit():
+                flight_ref = int(flight_ref)
+            else:
+                print("Please input an integer number!")
+        else:
+            break
+        time.sleep(3)
+        clear()
+
+
 def booking(user):
     clear()
     while True:
-        print(
-            """
+        print("-= Booking System =-=")
 
-            """
-        )
-        choice = input("=> ")
-        if choice.isdigit():
-            choice = int(choice)
-            pass
+        # What fight is being booked
+        # Main passenger info
+        # Get available Seats
+        # Get Capacity
+        # Generate seat number
+        # Find out the ticket price (£100 default)
+        # Confirm information
+        # Ask about children
+        # Loop above through each child
+        # Set `dependant_on` to main passenger
+
+        print("What flight would you like to book? (or say 'exit')\n")
+        flight_ref = input("=> ")
+        if flight_ref != "exit":
+            if flight_ref.isdigit():
+                flight_ref = int(flight_ref)
+                try:
+                    flight_data = user.display_flight_id(flight_ref)
+                except:
+                    print("There was an issue with database. Please try again later!")
+                else:
+                    if flight_data != False:
+                        print(f"Available seat number: {flight_data[8]}")
+                        if flight_data[8] > 0:
+                            while True:
+                                print(
+                                    "How many tickets would you like to book including yourself? (or say 'exit')"
+                                )
+
+                                ticket_amount = input("=> ")
+                                if ticket_amount != "exit":
+                                    if ticket_amount.isdigit():
+                                        ticket_amount = int(ticket_amount)
+                                        if flight_data[8] >= ticket_amount:
+                                            booking_loop(
+                                                user, flight_data, ticket_amount
+                                            )
+                                        else:
+                                            print(
+                                                "We do not have that many seats available."
+                                            )
+                                    else:
+                                        print("Please input an integer number!")
+                                else:
+                                    break
+
+                    else:
+                        print("This flight doesn't exist!")
+            else:
+                print("Please input an integer number!")
+        else:
+            break
+        time.sleep(3)
+        clear()
 
 
 def check_each_passenger(user, data):
@@ -125,59 +198,30 @@ def security_check(user):
                             print("Please input 'yes' or 'no'.")
                 else:
                     print("There is no flight with this reference number.")
+        else:
+            print("Please input an integer number!")
         time.sleep(3)
         clear()
 
 
-def staff_menu(user):
+def passanger_management(user):
     clear()
     while True:
         print(
             f"""
-        -= Staff Menu =-
+        -= Passanger Management =-
     Select one of the options
 
-    1. Book a flight
-    2. Change passenger information
-    3. Display passenger information
-    4. Display flight information
-    5. Check available seats
-    6. Security Check
-    7. {"Log out" if user.permission_level == "user" else "Go Back"}
+    1. View passenger information
+    2. Edit passenger information
+    3. Remove passanger from a flight
+    4. Go Back
         """
         )
         choice = input("=> ")
         if choice.isdigit():
             choice = int(choice)
             if choice == 1:
-                booking(user)
-            elif choice == 2:
-                while True:
-                    print(
-                        "Please input the following information to edit the passenger."
-                    )
-
-                    passport = input("Passport number: ")
-                    column = input("Column to change: ")
-                    new_info = input("New information: ")
-
-                    print(
-                        f"Passport number {passport}, changing {column} information.\nNew information: {new_info}"
-                    )
-                    print("Is that correct?")
-                    confirm = input("=> ")
-                    if confirm == "yes":
-                        try:
-                            user.change_passenger(passport, column, new_info)
-                        except:
-                            print("Passport number not found")
-                        else:
-                            break
-                    elif confirm == "no":
-                        pass
-                    else:
-                        print("Please input a 'yes' or 'no' answer.")
-            elif choice == 3:
                 while True:
                     print("Please provide the first and last name of the passenger.")
                     fname = input("First Name: ")
@@ -208,8 +252,101 @@ def staff_menu(user):
                         print(
                             "Please only input alphabetical characters for first and last name."
                         )
+            elif choice == 2:
+                while True:
+                    print(
+                        "Please input the following information to edit the passenger."
+                    )
 
+                    passport = input("Passport number: ")
+                    column = input("Column to change: ")
+                    new_info = input("New information: ")
+
+                    print(
+                        f"Passport number {passport}, changing {column} information.\nNew information: {new_info}"
+                    )
+                    print("Is that correct?")
+                    confirm = input("=> ")
+                    if confirm == "yes":
+                        try:
+                            user.change_passenger(passport, column, new_info)
+                        except:
+                            print("Passport number not found")
+                        else:
+                            break
+                    elif confirm == "no":
+                        pass
+                    else:
+                        print("Please input a 'yes' or 'no' answer.")
+            elif choice == 3:
+                pass
             elif choice == 4:
+                clear()
+                break
+            else:
+                print("That's not a valid option\nPlease try again")
+        else:
+            print("Please input an integer number!")
+        time.sleep(3)
+        clear()
+
+
+def account_settings(user):
+    clear()
+    while True:
+        print(
+            f"""
+        -= Account Settings =-
+    Select one of the options
+
+    1. Change account information
+    2. Change password
+    3. Go back
+        """
+        )
+        choice = input("=> ")
+        if choice.isdigit():
+            choice = int(choice)
+            if choice == 1:
+                pass
+            elif choice == 2:
+                pass
+            elif choice == 3:
+                clear()
+                break
+            else:
+                print("That's not a valid option\nPlease try again")
+        else:
+            print("Please input an integer number!")
+        time.sleep(3)
+        clear()
+
+
+def staff_menu(user):
+    clear()
+    while True:
+        print(
+            f"""
+        -= Staff Menu =-
+    Select one of the options
+
+    1. Book a flight
+    2. Passenger Management
+    3. Display flight information
+    4. Check available seats
+    5. Security Check
+    6. Account settings
+    7. {"Log out" if user.permission_level == "user" else "Go Back"}
+        """
+        )
+        choice = input("=> ")
+        if choice.isdigit():
+            choice = int(choice)
+            if choice == 1:
+                booking(user)
+            elif choice == 2:
+                passanger_management(user)
+            elif choice == 3:
                 print(
                     """
     How would you like to look up a flight?
@@ -292,7 +429,7 @@ def staff_menu(user):
 
                 else:
                     print("Please input an integer number!")
-            elif choice == 5:
+            elif choice == 4:
                 print("Please input the Flight ID")
                 flight_id = input("=> ")
                 if flight_id.isdigit():
@@ -312,8 +449,10 @@ def staff_menu(user):
                             print("This Flight ID doesn't exist")
                 else:
                     print("Please input an integer number!")
-            elif choice == 6:
+            elif choice == 5:
                 security_check(user)
+            elif choice == 6:
+                account_settings(user)
             elif choice == 7:
                 clear()
                 break

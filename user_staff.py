@@ -44,6 +44,9 @@ class Staff(Authentication):
     def add_passenger(self, *args):
         pass
 
+    def remove_passenger(self):
+        pass
+
     def change_passenger(self, passport_id, column, new_data):
         query = f"UPDATE passenger_details SET {column} = '{new_data}' WHERE passport_id = '{passport_id}'"
         with self.cursor.execute(query):
