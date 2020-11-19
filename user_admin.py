@@ -35,10 +35,29 @@ class Admin(Staff):
             data = self.cursor.fetchall()
         return data if data != None else False
 
-    def edit_flight(self, **kwargs):
+    def add_flight(self, details):
+        journey_columns = [
+            "plane_id",
+            "departure_time",
+            "arrival_time",
+            "departing_from",
+            "arriving_to",
+        ]
+        journey_details = []
+        for k, v in details.items():
+            if k in journey_columns:
+                journey_details.append(f"'{v}'")
+
+        plane_query = f"INSERT INTO plane ({', '.join(journey_columns)}) VALUES ({', '.join(journey_details)})"
+        print(plane_query)
+
+    def edit_flight(self, flight_ref, column, new_data):
         pass
 
-    def add_flight(self, details):
+    def remove_flight(self, flight_ref):
+        pass
+
+    def add_plane(self, details):
         plane_columns = [
             "plane_type",
             "plane_capacity",
@@ -50,19 +69,18 @@ class Admin(Staff):
             "fuel_per_km",
             "maintenance_data",
         ]
-        journey_columns = []
         plane_details = []
-        journey_details = []
         for k, v in details.items():
             if k in plane_columns:
-                plane_details.append(v)
-            elif k in journey_columns:
-                journey_details.append(v)
+                plane_details.append(f"'{v}'")
 
-        plane_query = f"INSERT INTO plane ({', '.join(plane_columns)}) VALUES ("
+        plane_query = f"INSERT INTO plane ({', '.join(plane_columns)}) VALUES ({', '.join(plane_details)})"
         print(plane_query)
 
-    def remove_flight(self, flight_ref):
+    def edit_plane(self, flight_ref, column, new_data):
+        pass
+
+    def remove_plane(self, flight_ref):
         pass
 
 
@@ -79,7 +97,7 @@ def main():
         "fuel_per_km": 12,
         "maintenance_data": "2020-08-11",
     }
-    test.add_flight(plane_details, "hi")
+    test.add_plane(plane_details)
 
 
 if __name__ == "__main__":

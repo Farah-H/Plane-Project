@@ -1,6 +1,7 @@
 import os
 import getpass
 import time
+import datetime
 from user_guest import Guest
 from user_staff import Staff
 from user_admin import Admin
@@ -43,37 +44,34 @@ Select one of the options
             elif choice == 6:
                 pass
             elif choice == 7:
+                clear()
                 break
             else:
                 print("That's not a valid option\nPlease try again")
 
         else:
             print("Please input a integer number!")
+        time.sleep(3)
+        clear()
 
 
-def admin_menu(user):
+def user_management(user):
     clear()
     while True:
         print(
             """
--= Administrator Menu =-
+-= User Management =-
 Select one of the options
 
-1. Add staff member
-2. Remove staff member
-3. Change user's permissions
-4. View user informations
-5. Add flight
-6. Remove flight
-7. Edit flight information
-8. Backup a database table to a file
-9. Log out
+1. Add a new user
+2. Remove a user
+3. Edit user permissions
+4. View user information
+5. Go back
         """
         )
         choice = input("=> ")
         if choice.isdigit():
-            choice = int(choice)
-
             if choice == 1:
                 print("Please provide a username and password for the new user.")
                 username = input("Username: ")
@@ -123,6 +121,37 @@ Select one of the options
                     ## NEEDS FORMATTING
                     print(data)
             elif choice == 5:
+                clear()
+                break
+            else:
+                print("That's not a valid option\nPlease try again")
+        else:
+            print("Please input a integer number!")
+
+
+def admin_menu(user):
+    clear()
+    while True:
+        print(
+            """
+-= Administrator Menu =-
+Select one of the options
+
+1. Staff Management
+2. Flight Management
+3. Plane Management
+4. Backup System
+5. Staff Actions
+6. Log out
+        """
+        )
+        choice = input("=> ")
+        if choice.isdigit():
+            choice = int(choice)
+
+            if choice == 1:
+                user_management(user)
+            elif choice == 5:
                 pass
             elif choice == 6:
                 pass
@@ -156,12 +185,15 @@ Select one of the options
                     print("Unsuppored file format")
 
             elif choice == 9:
+                clear()
                 break
             else:
                 print("That's not a valid option\nPlease try again")
 
         else:
             print("Please input a integer number!")
+        time.sleep(3)
+        clear()
 
 
 def login_menu():
@@ -190,7 +222,10 @@ Please input your login details
                 admin_menu(user)
             else:
                 print("Permission Error. Please try again!")
+                time.sleep(3)
+                clear()
                 break
+            clear()
             break
 
 
@@ -221,42 +256,47 @@ See all the flights!
                     print(
                         "We had an issue retriving flight data.\nPlease try again later."
                     )
-                time.sleep(5)
 
             elif choice == 2:
                 print("What destination are you interested in?")
                 destination = input("=> ")
-                data = user.display_flight("journey_details.arriving_to", destination)
+                data = user.display_flight_destination(destination)
                 if data != False:
                     ## FORMATTING NEEDED
                     print(data)
                 else:
                     print("That's not a valid destination.\nPlease try again")
-                time.sleep(5)
 
             elif choice == 3:
                 print("What day would you like to fly?\nFormat: YYYY MM DD")
                 departure = input("=> ").split(" ")
                 if len(departure) == 3:
-                    data = user.display_flight(
-                        "journey_details.departure_time", departure
-                    )
-                    if data != False:
-                        ## FORMATTING NEEDED
-                        print(data)
+                    try:
+                        departure = datetime.datetime(
+                            int(departure[0]), int(departure[1]), int(departure[2])
+                        )
+                    except:
+                        print("Thats not a correct date format!\nPlease try again")
                     else:
-                        print("That's not a valid date.\nPlease try again")
+                        data = user.display_flight_date(departure)
+                        if data != False:
+                            ## FORMATTING NEEDED
+                            print(data)
+                        else:
+                            print("That's not a valid date.\nPlease try again")
                 else:
                     print("Please use the correct format YYYY MM DD")
-                time.sleep(5)
 
             elif choice == 4:
                 user = None
+                clear()
                 break
             else:
                 print("That's not a valid choice.\nPlease try again")
         else:
             print("Please input an integer number.")
+        time.sleep(3)
+        clear()
 
 
 def main():
@@ -280,6 +320,7 @@ Select one of the Options
             elif choice == 2:
                 login_menu()
             elif choice == 3:
+                clear()
                 break
             else:
                 print("That's not a valid option\nPlease try again")
