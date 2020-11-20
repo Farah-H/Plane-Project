@@ -223,7 +223,7 @@ def booking(user):
 
                     text = [
                         f"The total for the booking is £{price_total}",
-                        f"Your booking number is {booking_id}"
+                        f"Your booking number is {booking_id}",
                         "Thank you for using our services!",
                         "We hope you enjoy your flight!",
                     ]
