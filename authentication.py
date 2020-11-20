@@ -16,7 +16,12 @@ class Authentication(Connection):
         self.__db_password = self.__credential_list[0]
         # This is our staff member's permission level
         self.__permission_level = self.__credential_list[1]
+        self.__staff_id = self.get_staff_id(self.__login)
         super().__init__(self.__db_login, self.__db_password)
+
+    @property
+    def staff_id(self):
+        return self.__staff_id
 
     @property
     def db_login(self):
@@ -35,6 +40,12 @@ class Authentication(Connection):
         else:
             # If cannot login then raises an error (stops class from initialising)
             raise Exception("Error: Login credentials do not match the db.")
+
+    def get_staff_id(self, username):
+        data = self.credential_manager(username)
+        if data != False:
+            return data[3]
+        return False
 
     # Function for pulling all credentials and returing only the selected username's information
     def credential_manager(self, username):

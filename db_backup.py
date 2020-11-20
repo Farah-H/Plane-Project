@@ -26,7 +26,8 @@ class BackupData(Connection):
             except:
                 print("The backup file does not exist.\nSkipping loading old Data.")
             finally:
-                self.constructor(self.backup_file, sql_data)
+                output_data = [[str(a) for a in i] for i in sql_data]
+                self.constructor(self.backup_file, output_data)
 
         return old_data
 
