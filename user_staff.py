@@ -36,118 +36,10 @@ class Staff(Authentication):
 
         return data if len(data) > 0 else False
 
-    def add_passengers(
-        self, journey_id, staff_id, airline, date, terminal, user_data, price
-    ):
-        for i in range(len(user_data)):
-            user_data[i] = f"'{user_data[i]}'"
-
-        journey_id = f"'{journey_id}'"
-        staff_id = f"'{staff_id}'"
-        airline = f"'{airline}'"
-        date = f"'{date}'"
-        terminal = f"'{terminal}'"
-        price = f"'{price}'"
-
-        passport_query = f"INSERT INTO passport_details (passport_id, issue_date, expiry_date, expired, country_code) VALUES ('{user_data[0]}', 'NULL', 'NULL', '0', 'UK')"
-        self.cursor.execute(passport_query)
-        self.connection.commit()
-
-        passenger_query = f"INSERT INTO passenger_details (passport_id, first_name, last_name, dob, dependent_on) VALUES ({', '.join(user_data[-1])}"
-        self.cursor.execute(passenger_query)
-        self.connection.commit()
-
-        booking_query = f"INSERT INTO booking_details (booking_date, staff_id, airline, total) VALUES ('{date}', '{staff_id}', '{airline}', '{price}')"
-        self.cursor.execute(passenger_query)
-        self.connection.commit()
-
-        booking_id_query = f"SELECT * FROM booking_details"
-        booking_id = None
-        with self.cursor.execute(booking_id_query):
-            row = self.cursor.fetchone()
-            while row:
-                if row[2] == date:
-                    booking_id = row[0]
-                row = self.cursor.fetchone()
-
-        if booking_id != None:
-            passenger_id_query = f"SELECT * FROM passenger_details"
-            passenger_id = None
-            with self.cursor.execute(passenger_id_query):
-                row = self.cursor.fetchone()
-                while row:
-                    if user_data[1] == row[2] and user_data[2] == row[3]:
-                        passenger_id = row[0]
-                    row = self.cursor.fetchone()
-
-            if passenger_id != None:
-                ticket_query = f"INSERT INTO ticket_details (journey_id, seat_number, termianal_id, passenger_id, booking_id) VALUES ('{journey_id}', '{user_data[-1]}', 'NULL', '{passenger_id}', '{booking_id}')"
-
-                self.cursor.execute(passenger_query)
-                self.connection.commit()
-            else:
-                raise Exception()
-
-        else:
-            raise Exception()
-
-    def add_single_passenger(self, user_data):
-        for i in range(len(user_data)):
-            user_data[i] = f"'{user_data[i]}'"
-
-        journey_id, staff_id, airline, date, terminal, price = (
-            user_data[0],
-            user_data[1],
-            user_data[2],
-            user_data[3],
-            user_data[4],
-            user_data[-1],
-        )
-
-        passport_query = f"INSERT INTO passport_details (passport_id, issue_date, expiry_date, expired, country_code) VALUES ({user_data[5]}, '2017-03-02', '2020-09-01', '0', 'UK')"
-        self.cursor.execute(passport_query)
-        self.connection.commit()
-
-        passenger_query = f"INSERT INTO passenger_details (passport_id, first_name, last_name, dob, dependent_on) VALUES ({', '.join(user_data[5:-2])}, NULL)"
-        self.cursor.execute(passenger_query)
-        self.connection.commit()
-
-        booking_query = f"INSERT INTO booking_details (booking_date, staff_id, airline, total) VALUES ({date}, {staff_id}, {airline}, {price})"
-        self.cursor.execute(passenger_query)
-        self.connection.commit()
-
-        booking_id_query = f"SELECT * FROM booking_details"
-        booking_id = None
-        with self.cursor.execute(booking_id_query):
-            row = self.cursor.fetchone()
-            while row:
-                if date in str(row[2]):
-                    booking_id = row[0]
-                row = self.cursor.fetchone()
-
-        if booking_id != None:
-            passenger_id_query = f"SELECT * FROM passenger_details"
-            passenger_id = None
-            with self.cursor.execute(passenger_id_query):
-                row = self.cursor.fetchone()
-                while row:
-                    if user_data[1] in str(row[2]) and user_data[2] in str(row[3]):
-                        passenger_id = row[0]
-                    row = self.cursor.fetchone()
-
-            if passenger_id != None:
-                ticket_query = f"INSERT INTO ticket_details (journey_id, seat_number, termianal_id, passenger_id, booking_id) VALUES ('{journey_id}', '{user_data[-1]}', 'NULL', '{passenger_id}', '{booking_id}')"
-
-                self.cursor.execute(passenger_query)
-                self.connection.commit()
-
-    def remove_passenger(self):
-        pass
-
     def change_passenger(self, passport_id, column, new_data):
         query = f"UPDATE passenger_details SET {column} = '{new_data}' WHERE passport_id = '{passport_id}'"
         with self.cursor.execute(query):
-            print("Successfully altered the flight information!")
+            print("Successfully altered the passenger's information!")
         self.connection.commit()
 
     def display_passenger(self, fname, lname):
@@ -156,7 +48,7 @@ class Staff(Authentication):
         with self.cursor.execute(query):
             row = self.cursor.fetchone()
             while row:
-                if fname.lower() == row[0] and lname.lower() == row[1]:
+                if fname.lower() in row[0].lower() and lname.lower() in row[1].lower():
                     data.append(row)
                 row = self.cursor.fetchone()
 
@@ -164,7 +56,7 @@ class Staff(Authentication):
 
     def security_check(self, flight_ref):
         data = []
-        query = f"SELECT ticket_details.ticket_id, ticket_details.seat_number, passenger_details.first_name, passenger_details.last_name, passenger_details.passport_id, passenger_details.dependent_on from passenger_details inner join ticket_details on passenger_details.passenger_id = ticket_details.passenger_id WHERE ticket_details.booking_id = {flight_ref}"
+        query = f"SELECT passenger_details.first_name, passenger_details.last_name, passenger_details.dob, passenger_details.passport_id FROM passenger_details INNER JOIN ticket_details on ticket_details.passenger_id = passenger_details.passenger_id WHERE ticket_details.journey_id = '{flight_ref}';"
         with self.cursor.execute(query):
             row = self.cursor.fetchone()
             while row:
@@ -172,3 +64,65 @@ class Staff(Authentication):
                 row = self.cursor.fetchone()
 
         return data if len(data) > 0 else False
+
+    def add_passport(self, passport_id, issue_date, expiry_date, expired, country_code):
+        check_query = "SELECT * FROM passport_details"
+        exists = False
+        with self.cursor.execute(check_query):
+            row = self.cursor.fetchone()
+            while row:
+                if passport_id in row[0]:
+                    exists = True
+                row = self.cursor.fetchone()
+
+        if not exists:
+            query = f"INSERT INTO passport_details (passport_id, issue_date, [expiry_date], expired, country_code) VALUES ('{passport_id}', '{issue_date}', '{expiry_date}', '{expired}', '{country_code}');"
+            self.cursor.execute(query)
+            self.cursor.commit()
+
+    def add_passenger(self, passport_id, fname, lname, dob, dependent):
+        check_query = "SELECT * FROM passenger_details"
+        exists = False
+        with self.cursor.execute(check_query):
+            row = self.cursor.fetchone()
+            while row:
+                if passport_id in row:
+                    exists = row[0]
+                row = self.cursor.fetchone()
+
+        if exists == False:
+            if dependent != "NULL":
+                dependent = f"'{dependent}'"
+
+            query = f"INSERT INTO passenger_details (passport_id, first_name, last_name, dob, dependent_on) VALUES ('{passport_id}', '{fname}', '{lname}', '{dob}', {dependent});"
+            self.cursor.execute(query)
+            self.cursor.commit()
+
+            check_query = "SELECT * FROM passenger_details"
+            exists = False
+            with self.cursor.execute(check_query):
+                row = self.cursor.fetchone()
+                while row:
+                    if passport_id in row:
+                        exists = row[0]
+                    row = self.cursor.fetchone()
+            return exists
+        else:
+            return exists
+
+    def add_booking(self, booking_date, staff_id, airline, price):
+        query = f"INSERT INTO booking_details (booking_date, staff_id, airline, total) VALUES ( '{booking_date}', '{staff_id}', '{airline}', '{price}');"
+        self.cursor.execute(query)
+        self.cursor.commit()
+
+        return_query = "SELECT * FROM booking_details"
+        with self.cursor.execute(return_query):
+            data = self.cursor.fetchall()
+        return data[-1][0]
+
+    def add_ticket(
+        self, journey_id, seat_number, terminal_id, passenger_id, booking_id
+    ):
+        query = f"INSERT INTO ticket_details(journey_id, seat_number, terminal_id, passenger_id, booking_id) VALUES ('{journey_id}', '{seat_number}', '{terminal_id}', '{passenger_id}', '{booking_id}');"
+        self.cursor.execute(query)
+        self.cursor.commit()
