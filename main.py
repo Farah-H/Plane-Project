@@ -146,6 +146,7 @@ def booking(user):
                                                         ]
                                                         ticket_data.append(info)
                                                         count += 1
+                                                        clear()
                                                 else:
                                                     dependent = ticket_data[0][1]
                                                     try:
@@ -172,6 +173,7 @@ def booking(user):
                                                         ]
                                                         ticket_data.append(info)
                                                         count += 1
+                                                        clear()
                                             else:
                                                 text = ["Please input the data again."]
                                                 prompt(text)
@@ -308,13 +310,11 @@ def check_each_passenger(user, data):
                 clear()
                 break
             elif choice == "no":
-                more = False
-                break
+                clear()
+                return True
             else:
                 text = ["Please input 'yes' or 'no'."]
                 prompt(text)
-        if not more:
-            return True
 
 
 def security_check(user):
@@ -349,10 +349,12 @@ def security_check(user):
                                 "Date of Birth",
                                 "Passport Number",
                             ]
+                            clear()
                             table_printer(data, security_columns)
                             action = check_each_passenger(user, data)
                             break
                         elif user_input == "no":
+                            clear()
                             action = check_each_passenger(user, data)
                             break
                         else:
@@ -563,6 +565,7 @@ def staff_menu(user):
 
                     elif user_input == 3:
                         text = ["Please input the Flight Date. Format: YYYY MM DD"]
+                        prompt(text)
                         departure = input("=> ").split(" ")
                         if len(departure) == 3:
                             try:
@@ -610,12 +613,14 @@ def staff_menu(user):
                     try:
                         data = user.display_flight_id(flight_id)
                     except:
+                        clear()
                         text = [
                             "There was an issue with the Database.",
                             "Please try again later",
                         ]
                         prompt(text)
                     else:
+                        clear()
                         if data != False:
                             text = [
                                 f"There are {data[0][7]} available seats for Flight ID {flight_id}"
@@ -998,6 +1003,7 @@ def login_menu():
             text = ["Login information incorrect!", "Please try again."]
             prompt(text)
             time.sleep(3)
+            clear()
         else:
             for i in range(3):
                 clear()

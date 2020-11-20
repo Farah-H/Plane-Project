@@ -58,6 +58,7 @@ Child
 - `db_*.py` = backend class files containing database related - functionality
 - `user_*.py` = Containers for each level of permissions and their actions
 - `test_*.py` = test cases for the project
+
 # Plane-Project Test
 Each heading will have a list of tests that need to be created to check the functionality behind our project works as
  intended. Each bullet point is a new test, bullet points with question marks at the start are speculative and need
@@ -102,9 +103,9 @@ Each heading will have a list of tests that need to be created to check the func
  False if there are issues with the data (e.g. destinations and departure locations that aren't in the database
  , references to flights that don't exist, etc.)
 ## Guest class
-- 
+-
 ## Staff class
-- 
+-
 ## StaffMember class
 - Can the StaffMember log in to be able to perform tasks that only Staff can perform?
 - Can a StaffMember change their details e.g. regularly changing their passwords to ensure the system is secure?
@@ -129,7 +130,7 @@ Each heading will have a list of tests that need to be created to check the func
 - Good handling of invalid options with except: continue block
 - Are the ifs and elifs in the loops?
 - Infinite loop when making choices?
-    - Except statement only runs when a user inputs a non numeric, doesn't cover if the user inputs numbers that aren't 
+    - Except statement only runs when a user inputs a non numeric, doesn't cover if the user inputs numbers that aren't
       1, 2, or 3
 - Check email address for the inclusion of the '@' character to validate it
 - Check for non yes or no responses to the minor question
@@ -138,7 +139,7 @@ Each heading will have a list of tests that need to be created to check the func
  minors)
 - No message on what the user should input for ```departure_date```
 - Good check on the validity of the departure and landing destinations
-## 
+##
 ## Passenger class tests
 - When initialised, are the passengers information for their Passport, Visa, and Ticket Number assigned correctly?
 - If we call the ```set_personal_info()``` method, are the attributes set accordingly
